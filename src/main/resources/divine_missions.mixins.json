@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.robertx22.divine_missions.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+	
+	"block.world_of_exile.hell_portal": "Hell Portal",
+	
+	"item.divine_missions.mission": "Mission",
+	
+	"divine_missions.mission": "Mission",
+	"divine_missions.required": "Required",
+	"divine_missions.rewards": "Rewards",
+	"divine_missions.loot_table": "Loot table",
+	"divine_missions.reputation": "Reputation",
+	"divine_missions.aspect": "Aspect",
+	
+	"divine_missions.task.specific_mob_kill": "Kill",
+	"divine_missions.task.any_mob_kill": "Kill Any Mob",
+	"divine_missions.task.kill_mob_of_tag": "Kill Mob tagged as",
+	"divine_missions.task.bring_item": "Bring",
+	
+	
+	"divine_missions.god.sea": "Ocean",
+	"divine_missions.god.forge": "Forge",
+	"divine_missions.god.hunt": "Hunt",
+	
+	"divine_missions.rarity.common": "Common",
+	"divine_missions.rarity.uncommon": "Uncommon",
+	"divine_missions.rarity.rare": "Rare",
+	"divine_missions.rarity.epic": "Epic"		
+	
+}
