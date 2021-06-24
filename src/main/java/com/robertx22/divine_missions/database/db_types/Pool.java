@@ -2,10 +2,11 @@ package com.robertx22.divine_missions.database.db_types;
 
 import com.robertx22.divine_missions.database.MissionsDB;
 import com.robertx22.divine_missions.database.RegistryTypes;
+import com.robertx22.divine_missions.database.condition_types.ConditionData;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
-import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,13 @@ public class Pool implements JsonExileRegistry<Pool>, IAutoGson<Pool> {
     public int weight = 1000;
     public String id = "";
 
+    public List<String> gods = new ArrayList<>();
+
     public PickType pick_type = PickType.PICK_ONE;
     public PoolType type = PoolType.REWARDS;
-    public String mod_req = "";
 
     public List<String> entries = new ArrayList<>();
+    public List<ConditionData> conditions = new ArrayList<>();
 
     public List<Reward> getRewards() {
         return entries.stream()
@@ -47,13 +50,10 @@ public class Pool implements JsonExileRegistry<Pool>, IAutoGson<Pool> {
             .collect(Collectors.toList());
     }
 
-    public boolean hasRequiredMod() {
-        if (!mod_req.isEmpty()) {
-            return FabricLoader.getInstance()
-                .isModLoaded(mod_req);
-        }
-
-        return true;
+    public boolean meetsConditions(PlayerEntity player) {
+        return conditions.stream()
+            .allMatch(x -> x.getCondition()
+                .isAllowed(player, x));
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
 import com.robertx22.library_of_exile.utils.RandomUtils;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
@@ -22,41 +23,37 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
 
     public String format = "";
 
-    public List<String> reward_pools = new ArrayList<>();
-    public List<String> task_pools = new ArrayList<>();
-
-    public List<Pool> getTaskPools() {
-        return getPools(task_pools);
-    }
-
-    public List<Pool> getRewardPools() {
-        return getPools(reward_pools);
-    }
-
     public Formatting getFormat() {
         return FormatUtils.of(format);
     }
 
-    public List<Pool> getPools(List<String> list) {
-        List<Pool> result = new ArrayList<>();
-        for (String x : list) {
-            Pool pool = MissionsDB.Pools()
-                .get(x);
+    List<Pool> getPoolsForThisGod(PlayerEntity player, Pool.PoolType type) {
+        List<Pool> list = new ArrayList<>();
 
-            if (pool.hasRequiredMod()) {
-                result.add(pool);
-            }
-        }
-        return result;
+        MissionsDB.Pools()
+            .getList()
+            .forEach(x -> {
+                if (x.gods.contains(id)) {
+                    if (x.meetsConditions(player)) {
+                        if (x.type == type) {
+                            list.add(x);
+                        }
+                    }
+                }
+            });
+
+        return list;
     }
 
-    public List<Pool> getRandomPoolsToUse(List<String> pools, MissionRarity rar) {
+    public List<Pool> getRandomPoolsToUse(PlayerEntity player, Pool.PoolType type, MissionRarity rar) {
+        List<Pool> pools = getPoolsForThisGod(player, type);
+
         int amount = RandomUtils.RandomRange(rar.min_tasks, rar.max_tasks);
 
         List<Pool> touse = new ArrayList<>();
 
         List<Pool> pickrandom = new ArrayList<>();
-        getPools(pools)
+        pools
             .forEach(x -> {
                 if (x.pick_type == Pool.PickType.ALWAYS_INCLUDE) {
                     touse.add(x);

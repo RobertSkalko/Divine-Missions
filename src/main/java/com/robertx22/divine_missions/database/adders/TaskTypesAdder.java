@@ -1,4 +1,4 @@
-package com.robertx22.divine_missions.database;
+package com.robertx22.divine_missions.database.adders;
 
 import com.robertx22.divine_missions.database.task_types.BringItem;
 import com.robertx22.divine_missions.database.task_types.KillAnyMob;

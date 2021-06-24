@@ -11,6 +11,7 @@
 	"divine_missions.required": "Required",
 	"divine_missions.rewards": "Rewards",
 	"divine_missions.loot_table": "Loot table",
+	"divine_missions.exp": "Exp",
 	"divine_missions.reputation": "Reputation",
 	"divine_missions.aspect": "Aspect",
 	"divine_missions.new_missions_arrived": "New Missions have arrived.",
@@ -28,6 +29,10 @@
 	"divine_missions.god.wisdom": "Wisdom",
 	"divine_missions.god.war": "War",
 	"divine_missions.god.harvest": "Harvest",
+	
+	"divine_missions.loot_table.divine_missions_enchanted_book": "Enchanted Book",
+	"divine_missions.loot_table.divine_missions_enchanted_rod": "Enchanted Rod",
+	
 	
 	"divine_missions.rep.hated": "Hated",
 	"divine_missions.rep.hostile": "Hostile",

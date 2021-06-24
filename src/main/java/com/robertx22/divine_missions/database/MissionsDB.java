@@ -34,4 +34,12 @@ public class MissionsDB {
         return Database.getRegistry(RegistryTypes.POOL);
     }
 
+    public static ExileRegistryContainer<RewardType> RewardTypes() {
+        return Database.getRegistry(RegistryTypes.REWARD_TYPE);
+    }
+
+    public static ExileRegistryContainer<ConditionType> ConditionTypes() {
+        return Database.getRegistry(RegistryTypes.CONDITION_TYPE);
+    }
+
 }

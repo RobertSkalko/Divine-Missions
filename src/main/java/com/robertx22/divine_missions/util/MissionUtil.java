@@ -68,12 +68,21 @@ public class MissionUtil {
 
         data.rar = rar.id;
 
-        List<Pool> touse = god.getRandomPoolsToUse(god.task_pools, rar);
+        List<Pool> touse = god.getRandomPoolsToUse(player, Pool.PoolType.TASKS, rar);
 
         int totalWorth = 0;
 
         for (Pool x : touse) {
-            TaskEntry task = RandomUtils.weightedRandom(x.getTaskEntries());
+
+            List<String> alreadyUsed = data.tasks.stream()
+                .map(e -> e.id)
+                .collect(Collectors.toList());
+            List<TaskEntry> possible = x.getTaskEntries()
+                .stream()
+                .filter(e -> !alreadyUsed.contains(e.id))
+                .collect(Collectors.toList());
+
+            TaskEntry task = RandomUtils.weightedRandom(possible);
 
             TaskData taskData = TaskData.createNew(task, (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi));
             data.tasks.add(taskData);
@@ -81,15 +90,47 @@ public class MissionUtil {
             totalWorth += taskData.req * task.worth * rar.reward_multi;
         }
 
-        List<Pool> rewardPools = god.getRandomPoolsToUse(god.reward_pools, rar);
+        List<Pool> rewardPools = god.getRandomPoolsToUse(player, Pool.PoolType.REWARDS, rar);
+
+        int worthleft = totalWorth;
 
         // todo add limit with total worth
         for (Pool x : rewardPools) {
-            Reward reward = RandomUtils.weightedRandom(x.getRewards());
+            if (worthleft < 0) {
+                continue;
+            }
+
+            List<String> alreadyUsed = data.rewards.stream()
+                .map(e -> e.id)
+                .collect(Collectors.toList());
+            int finalWorthleft = worthleft;
+            List<Reward> possible = x.getRewards()
+                .stream()
+                .filter(e -> finalWorthleft > e.worth * e.min)
+                .filter(e -> !alreadyUsed.contains(e.id))
+                .collect(Collectors.toList());
+
+            if (possible.isEmpty()) {
+                continue;
+            }
+
+            Reward reward = RandomUtils.weightedRandom(possible);
             RewardData rewardData = new RewardData();
+
+            int max = worthleft / reward.worth;
+
             rewardData.id = reward.GUID();
-            rewardData.count = (int) (RandomUtils.RandomRange(reward.min, reward.max) * rar.reward_multi);
-            data.rewards.add(rewardData);
+            rewardData.count = (int) (RandomUtils.RandomRange(max, reward.max) * rar.reward_multi);
+
+            if (rewardData.count > max) {
+                rewardData.count = max;
+            }
+
+            worthleft -= rewardData.count * reward.worth;
+
+            if (rewardData.count > 0) {
+                data.rewards.add(rewardData);
+            }
         }
 
         data.god = god.GUID();

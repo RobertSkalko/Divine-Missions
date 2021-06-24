@@ -6,7 +6,6 @@ import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -20,11 +19,7 @@ public class RewardData {
     public int count = 1;
 
     public ItemStack getStack() {
-        if (getReward().type == Reward.Type.ITEM) {
-            return new ItemStack(Registry.ITEM.get(new Identifier(getReward().item_id)), count);
-        }
-
-        return new ItemStack(Items.CHEST); // todo
+        return new ItemStack(Registry.ITEM.get(new Identifier(getReward().data)), count);
     }
 
     public MutableText getTranslated() {
@@ -32,15 +27,8 @@ public class RewardData {
     }
 
     public void give(PlayerEntity player) {
-        if (getReward().type == Reward.Type.ITEM) {
-            ItemStack stack = getStack();
-
-            player.giveItemStack(new ItemStack(Items.IRON_INGOT));
-
-            player.inventory.offerOrDrop(player.world, stack);
-
-        }
-        // todo loottable give
+        getReward().getRewardType()
+            .giveReward(player, this);
     }
 
     public Reward getReward() {

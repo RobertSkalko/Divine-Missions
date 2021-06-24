@@ -15,6 +15,8 @@ public class AddRegistryContainers {
         Database.addRegistry(new ExileRegistryContainer(RegistryTypes.POOL, null).setIsDatapack());
 
         Database.addRegistry(new ExileRegistryContainer(RegistryTypes.TASK_TYPE, null));
+        Database.addRegistry(new ExileRegistryContainer(RegistryTypes.REWARD_TYPE, null));
+        Database.addRegistry(new ExileRegistryContainer(RegistryTypes.CONDITION_TYPE, null));
 
     }
 }

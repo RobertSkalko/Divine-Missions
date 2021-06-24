@@ -3,6 +3,7 @@ package com.robertx22.divine_missions.main;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 
 public class DivineMissions {
@@ -15,6 +16,10 @@ public class DivineMissions {
 
     public static Identifier id(String path) {
         return new Identifier(MODID, path);
+    }
+
+    public static TranslatableText ofTranslation(String path) {
+        return new TranslatableText(MODID + "." + path);
     }
 
     public static ItemGroup CreativeTab = FabricItemGroupBuilder.build(
