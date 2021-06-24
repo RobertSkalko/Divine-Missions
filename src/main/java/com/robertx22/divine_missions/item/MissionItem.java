@@ -26,7 +26,8 @@ import java.util.List;
 public class MissionItem extends Item {
 
     public MissionItem() {
-        super(new Settings().maxCount(1));
+        super(new Settings().maxCount(1)
+            .group(DivineMissions.CreativeTab));
 
     }
 
@@ -92,11 +93,11 @@ public class MissionItem extends Item {
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 
         try {
-            tooltip.clear();
 
             MissionItemData data = MissionItemData.SAVER.loadFrom(stack);
 
             if (data != null) {
+                tooltip.clear();
 
                 MutableText name = data.getRarity()
                     .getTranslated()
@@ -115,15 +116,18 @@ public class MissionItem extends Item {
                 String time = " (";
 
                 if (min > 0) {
-                    time += min + "m ";
+                    time += min + "m";
                 }
 
                 if (sec > 0) {
-                    time += sec + "s)";
+                    if (min > 0) {
+                        time += " ";
+                    }
+                    time += sec + "s";
                 }
 
                 if (sec > 0 || min > 0) {
-                    name.append(time);
+                    name.append(time + ")");
                 }
 
                 tooltip.add(name);

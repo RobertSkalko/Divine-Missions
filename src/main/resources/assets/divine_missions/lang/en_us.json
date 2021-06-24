@@ -1,8 +1,11 @@
 {
 	
-	"block.world_of_exile.hell_portal": "Hell Portal",
+	"itemGroup.divine_missions.creative_tab": "Divine Missions",
+	
+	"block.divine_missions.shrine": "Shrine",
 	
 	"item.divine_missions.mission": "Mission",
+	"item.divine_missions.shrine": "Shrine",
 	
 	"divine_missions.mission": "Mission",
 	"divine_missions.required": "Required",
@@ -10,6 +13,8 @@
 	"divine_missions.loot_table": "Loot table",
 	"divine_missions.reputation": "Reputation",
 	"divine_missions.aspect": "Aspect",
+	"divine_missions.new_missions_arrived": "New Missions have arrived.",
+	"divine_missions.new_reputation_message": "You are now %1$s with the %2$s aspect.",
 	
 	"divine_missions.task.specific_mob_kill": "Kill",
 	"divine_missions.task.any_mob_kill": "Kill Any Mob",
@@ -17,9 +22,22 @@
 	"divine_missions.task.bring_item": "Bring",
 	
 	
-	"divine_missions.god.sea": "Ocean",
+	"divine_missions.god.ocean": "Ocean",
 	"divine_missions.god.forge": "Forge",
 	"divine_missions.god.hunt": "Hunt",
+	"divine_missions.god.wisdom": "Wisdom",
+	"divine_missions.god.war": "War",
+	"divine_missions.god.harvest": "Harvest",
+	
+	"divine_missions.rep.hated": "Hated",
+	"divine_missions.rep.hostile": "Hostile",
+	"divine_missions.rep.unfriendly": "Unfriendly",
+	"divine_missions.rep.neutral": "Neutral",
+	"divine_missions.rep.friendly": "Friendly",
+	"divine_missions.rep.honored": "Honored",
+	"divine_missions.rep.exalted": "Exalted",
+	"divine_missions.rep.paragon": "Paragon",
+	
 	
 	"divine_missions.rarity.common": "Common",
 	"divine_missions.rarity.uncommon": "Uncommon",

@@ -53,7 +53,7 @@ public class MissionUtil {
         MissionRarity rar = RandomUtils.weightedRandom(MissionsDB.MissionRarities()
             .getList());
 
-        if (true || RandomUtils.roll(rep.chance_for_higher_rar)) {
+        if (RandomUtils.roll(rep.chance_for_higher_rar)) {
             int higher = rar.rank + 1;
             Optional<MissionRarity> opt = MissionsDB.MissionRarities()
                 .getList()
@@ -74,6 +74,7 @@ public class MissionUtil {
 
         for (Pool x : touse) {
             TaskEntry task = RandomUtils.weightedRandom(x.getTaskEntries());
+
             TaskData taskData = TaskData.createNew(task, (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi));
             data.tasks.add(taskData);
 

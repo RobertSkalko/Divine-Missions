@@ -1,4 +1,4 @@
-package com.robertx22.divine_missions.components;
+package com.robertx22.divine_missions.components.data;
 
 import com.robertx22.divine_missions.database.db_types.God;
 import info.loenwind.autosave.annotations.Storable;
@@ -20,7 +20,7 @@ public class PlayerRepudationData {
 
         int points = map.getOrDefault(god.GUID(), 0) + rep;
 
-        map.put(god.GUID(), rep);
+        map.put(god.GUID(), points);
 
     }
 }

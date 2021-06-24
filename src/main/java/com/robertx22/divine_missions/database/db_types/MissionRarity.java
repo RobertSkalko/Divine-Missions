@@ -2,6 +2,7 @@ package com.robertx22.divine_missions.database.db_types;
 
 import com.robertx22.divine_missions.database.RegistryTypes;
 import com.robertx22.divine_missions.main.DivineMissions;
+import com.robertx22.divine_missions.util.FormatUtils;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
@@ -23,7 +24,7 @@ public class MissionRarity implements JsonExileRegistry<MissionRarity>, IAutoGso
     public float diff_multi = 1;
 
     public Formatting getFormat() {
-        return Formatting.byName(format);
+        return FormatUtils.of(format);
     }
 
     public TranslatableText getTranslated() {

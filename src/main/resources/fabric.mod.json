@@ -8,8 +8,8 @@
     "mcrobertx22"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/anti-mob-cheese",
-    "sources": "https://github.com/RobertSkalko/Balance-of-Exile"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/divine-missions",
+    "sources": "https://github.com/RobertSkalko/Divine-Missions"
   },
   "license": "",
   "icon": "icon.png",
@@ -45,7 +45,8 @@
   },
   "custom": {
     "cardinal-components": [
-      "divine_missions:reputation"
+      "divine_missions:reputation",
+	  "divine_missions:missions"
     ]
   }
 }

@@ -1,5 +1,6 @@
 package com.robertx22.divine_missions.components;
 
+import com.robertx22.divine_missions.components.data.PlayerRepudationData;
 import com.robertx22.divine_missions.database.MissionsDB;
 import com.robertx22.divine_missions.database.db_types.God;
 import com.robertx22.divine_missions.database.db_types.ReputationLevel;
@@ -12,6 +13,7 @@ import dev.onyxstudios.cca.api.v3.entity.PlayerComponent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -52,6 +54,11 @@ public class PlayerReputation implements PlayerComponent, AutoSyncedComponent {
                 }
             });
 
+        if (can.isEmpty()) {
+            can.add(MissionsDB.ReputationLevels()
+                .get("neutral"));
+        }
+
         ReputationLevel repLevel = can.stream()
             .max(Comparator.comparingInt(x -> x.rank))
             .get();
@@ -60,7 +67,21 @@ public class PlayerReputation implements PlayerComponent, AutoSyncedComponent {
     }
 
     public void addReputation(int amount, God god) {
+
+        ReputationLevel level = getReputationLevel(god);
+
         data.addReputation(amount, god);
+        ReputationLevel after = getReputationLevel(god);
+
+        if (level.GUID()
+            .equals(after.GUID()) == false) {
+
+            player.sendMessage(new TranslatableText("divine_missions.new_reputation_message",
+                after.getTranslatable()
+                    .formatted(after.getFormat()),
+                god.getTranslatable()
+                    .formatted(god.getFormat())), false);
+        }
         KEY.sync(player);
     }
 

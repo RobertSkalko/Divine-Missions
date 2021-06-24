@@ -11,9 +11,12 @@ public class GodsAdder implements ExileRegistryInit {
     @Override
     public void registerAll() {
 
-        GodBuilder.of("sea", Formatting.AQUA, Arrays.asList(), Arrays.asList());
+        GodBuilder.of("ocean", Formatting.AQUA, Arrays.asList(PoolsAdder.OCEAN_TASKS), Arrays.asList());
         GodBuilder.of("forge", Formatting.GRAY, Arrays.asList(), Arrays.asList());
         GodBuilder.of("hunt", Formatting.DARK_GREEN, Arrays.asList(), Arrays.asList());
+        GodBuilder.of("wisdom", Formatting.LIGHT_PURPLE, Arrays.asList(PoolsAdder.WISDOM_TASKS), Arrays.asList());
+        GodBuilder.of("war", Formatting.RED, Arrays.asList(PoolsAdder.WAR_TASKS), Arrays.asList());
+        GodBuilder.of("harvest", Formatting.YELLOW, Arrays.asList(PoolsAdder.HARVEST_TASKS), Arrays.asList());
 
     }
 }

@@ -3,6 +3,7 @@ package com.robertx22.divine_missions.database.db_types;
 import com.robertx22.divine_missions.database.MissionsDB;
 import com.robertx22.divine_missions.database.RegistryTypes;
 import com.robertx22.divine_missions.main.DivineMissions;
+import com.robertx22.divine_missions.util.FormatUtils;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
@@ -33,7 +34,7 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
     }
 
     public Formatting getFormat() {
-        return Formatting.byName(format);
+        return FormatUtils.of(format);
     }
 
     public List<Pool> getPools(List<String> list) {

@@ -38,9 +38,11 @@ public class TaskEntryBuilder {
         return en;
     }
 
-    public static TaskEntry collect(int weight, String id, Item item, int worth, MinMax minmax) {
+    public static TaskEntry collect(int weight, Item item, int worth, MinMax minmax) {
         TaskEntry en = new TaskEntry();
-        en.id = id;
+        en.id = "get_" + Registry.ITEM.getId(item)
+            .toString()
+            .replace(":", "_");
         en.weight = weight;
         en.data = Registry.ITEM.getId(item)
             .toString();
