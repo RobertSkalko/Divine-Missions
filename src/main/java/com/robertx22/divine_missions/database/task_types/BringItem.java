@@ -16,7 +16,7 @@ import net.minecraft.util.registry.Registry;
 public class BringItem extends TaskType {
 
     public BringItem() {
-        this.id = TaskTypeIds.BRING_ITEM;
+        super(TaskTypeIds.BRING_ITEM);
     }
 
     @Override

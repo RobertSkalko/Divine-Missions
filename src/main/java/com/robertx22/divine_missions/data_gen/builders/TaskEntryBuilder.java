@@ -9,7 +9,7 @@ import net.minecraft.util.registry.Registry;
 
 public class TaskEntryBuilder {
 
-    public static TaskEntry ofMobKill(int seconds, int weight, EntityType type, int worth, MinMax minmax) {
+    public static TaskEntry kill(int seconds, int weight, EntityType type, int worth, MinMax minmax) {
         TaskEntry en = new TaskEntry();
         en.id = "kill_" + Registry.ENTITY_TYPE.getId(type)
             .getPath();
@@ -34,6 +34,19 @@ public class TaskEntryBuilder {
         en.min = minmax.min;
         en.max = minmax.max;
         en.task_type = TaskTypeIds.ANY_MOB_KILL;
+        en.addToSerializables();
+        return en;
+    }
+
+    public static TaskEntry lootChest(int seconds, int weight, String id, int worth, MinMax minmax) {
+        TaskEntry en = new TaskEntry();
+        en.weight = weight;
+        en.id = id;
+        en.worth = worth;
+        en.seconds = seconds;
+        en.min = minmax.min;
+        en.max = minmax.max;
+        en.task_type = TaskTypeIds.LOOT_CHEST;
         en.addToSerializables();
         return en;
     }

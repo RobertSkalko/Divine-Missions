@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class MissionUtil {
@@ -95,6 +96,7 @@ public class MissionUtil {
         int worthleft = totalWorth;
 
         // todo add limit with total worth
+
         for (Pool x : rewardPools) {
             if (worthleft < 0) {
                 continue;
@@ -126,11 +128,19 @@ public class MissionUtil {
                 rewardData.count = max;
             }
 
+            if (rewardData.count > 1000) { // round up a bit
+                int hundreds = rewardData.count / 100;
+                rewardData.count = hundreds * 100;
+            } else if (rewardData.count > 50) { // round up a bit
+                int tens = rewardData.count / 10;
+                rewardData.count = tens * 10;
+            }
             worthleft -= rewardData.count * reward.worth;
 
             if (rewardData.count > 0) {
                 data.rewards.add(rewardData);
             }
+
         }
 
         data.god = god.GUID();
@@ -146,4 +156,31 @@ public class MissionUtil {
             .filter(x -> x.getItem() == ModItems.INSTANCE.MISSION_ITEM)
             .collect(Collectors.toList());
     }
+
+    public static void tryDoMissions(PlayerEntity player, Consumer<TaskData> attempt) {
+
+        for (ItemStack stack : MissionUtil.getCurrentMissions(player)) {
+
+            MissionItemData data = MissionItemData.SAVER.loadFrom(stack);
+
+            if (data != null) {
+
+                for (TaskData task : data.tasks) {
+
+                    int before = task.curr;
+                    if (task.isDone(player)) {
+                        continue;
+                    }
+                    attempt.accept(task);
+
+                    if (before != task.curr) {
+                        MissionItemData.SAVER.saveTo(stack, data);
+                        return;
+                    }
+                }
+            }
+        }
+
+    }
+
 }

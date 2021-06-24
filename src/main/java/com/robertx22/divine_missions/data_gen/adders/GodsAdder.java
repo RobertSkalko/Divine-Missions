@@ -13,10 +13,9 @@ public class GodsAdder implements ExileRegistryInit {
     public static String FORGE = "forge";
     public static String WISDOM = "wisdom";
     public static String HUNT = "hunt";
-    public static String WAR = "war";
     public static String HARVEST = "harvest";
 
-    public static List<String> ALL_GODS = Arrays.asList(OCEAN, FORGE, HUNT, WISDOM, WAR, HARVEST);
+    public static List<String> ALL_GODS = Arrays.asList(OCEAN, FORGE, HUNT, WISDOM, HARVEST);
 
     @Override
     public void registerAll() {
@@ -25,7 +24,6 @@ public class GodsAdder implements ExileRegistryInit {
         GodBuilder.of("forge", Formatting.GRAY);
         GodBuilder.of("hunt", Formatting.DARK_GREEN);
         GodBuilder.of("wisdom", Formatting.LIGHT_PURPLE);
-        GodBuilder.of("war", Formatting.RED);
         GodBuilder.of("harvest", Formatting.YELLOW);
 
     }

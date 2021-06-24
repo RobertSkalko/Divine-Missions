@@ -13,7 +13,7 @@ import net.minecraft.util.registry.Registry;
 public class KillSpecificMob extends TaskType {
 
     public KillSpecificMob() {
-        this.id = TaskTypeIds.SPECIFIC_MOB_KILL;
+        super(TaskTypeIds.SPECIFIC_MOB_KILL);
     }
 
     @Override

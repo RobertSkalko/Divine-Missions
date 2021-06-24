@@ -5,13 +5,19 @@ import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.packets.PickMissionPacket;
 import com.robertx22.library_of_exile.gui.ItemSlotButton;
 import com.robertx22.library_of_exile.main.Packets;
+import com.robertx22.library_of_exile.utils.CLOC;
+import com.robertx22.library_of_exile.utils.GuiUtils;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
 
 public class MissionsScreen extends BaseScreen {
+
+    static int X = 146;
+    static int Y = 180;
 
     public MissionsScreen() {
         super(146, 180);
@@ -64,7 +70,16 @@ public class MissionsScreen extends BaseScreen {
 
         renderBackground(matrix, BACKGROUND);
 
+        int picks = PlayerMissions.KEY.get(mc.player).data.picks;
         super.render(matrix, x, y, ticks);
+        String txt = CLOC.translate(DivineMissions.ofTranslation("picks"))
+            + ": " + picks;
+
+        if (picks == 0) {
+            txt = CLOC.translate(DivineMissions.ofTranslation("come_back_later"));
+        }
+
+        GuiUtils.renderScaledText(matrix, guiLeft + X / 2, guiTop + Y + 10, 1F, txt, Formatting.GREEN);
 
         buttons.forEach(b -> b.renderToolTip(matrix, x, y));
 

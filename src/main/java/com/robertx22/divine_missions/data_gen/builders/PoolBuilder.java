@@ -25,8 +25,6 @@ public class PoolBuilder {
             .map(x -> x.GUID())
             .collect(Collectors.toList());
 
-        b.pool.addToSerializables();
-
         return b;
 
     }

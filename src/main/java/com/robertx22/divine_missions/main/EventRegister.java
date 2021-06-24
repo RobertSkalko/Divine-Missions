@@ -1,9 +1,11 @@
 package com.robertx22.divine_missions.main;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.robertx22.divine_missions.commands.CompleteAllMissions;
 import com.robertx22.divine_missions.commands.GiveMission;
 import com.robertx22.divine_missions.commands.RefreshMissions;
 import com.robertx22.divine_missions.components.PlayerMissions;
+import com.robertx22.divine_missions.events.OnChestLooted;
 import com.robertx22.divine_missions.events.OnMobKill;
 import com.robertx22.library_of_exile.events.base.EventConsumer;
 import com.robertx22.library_of_exile.events.base.ExileEvents;
@@ -39,9 +41,11 @@ public class EventRegister {
             CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager()
                 .getDispatcher();
             GiveMission.register(dispatcher);
+            CompleteAllMissions.register(dispatcher);
             RefreshMissions.register(dispatcher);
         });
 
         ExileEvents.MOB_DEATH.register(new OnMobKill());
+        ExileEvents.ON_CHEST_LOOTED.register(new OnChestLooted());
     }
 }

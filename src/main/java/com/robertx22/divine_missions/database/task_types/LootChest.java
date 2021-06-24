@@ -6,16 +6,17 @@ import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.saving.TaskData;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 
-public class KillAnyMob extends TaskType {
+public class LootChest extends TaskType {
 
-    public KillAnyMob() {
-        super(TaskTypeIds.ANY_MOB_KILL);
+    public LootChest() {
+        super(TaskTypeIds.LOOT_CHEST);
     }
 
     @Override
     public MutableText getTranslatable(TaskData data) {
-        return new TranslatableText(DivineMissions.MODID + ".task." + this.id);
+        return new TranslatableText(DivineMissions.MODID + ".loot_chest").formatted(Formatting.GOLD);
 
     }
 }

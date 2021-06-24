@@ -10,7 +10,7 @@ import net.minecraft.text.TranslatableText;
 public class KillMobTag extends TaskType {
 
     public KillMobTag() {
-        this.id = TaskTypeIds.KILL_MOB_OF_TAG;
+        super(TaskTypeIds.KILL_MOB_OF_TAG);
     }
 
     @Override

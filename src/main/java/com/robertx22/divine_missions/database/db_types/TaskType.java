@@ -8,7 +8,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
 
 public abstract class TaskType implements ExileRegistry<TaskType> {
-    public static TaskType SERIALIZER = new TaskType() {
+    public static TaskType SERIALIZER = new TaskType("") {
         @Override
         public boolean isTaskDone(TaskData data, PlayerEntity player) {
             return false;
@@ -22,6 +22,10 @@ public abstract class TaskType implements ExileRegistry<TaskType> {
 
     public int weight = 1000;
     public String id = "";
+
+    public TaskType(String id) {
+        this.id = id;
+    }
 
     public boolean isTaskDone(TaskData data, PlayerEntity player) {
         return data.curr >= data.req;
