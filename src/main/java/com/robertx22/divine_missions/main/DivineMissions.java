@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 public class DivineMissions {
 
     public static boolean RUN_DEV_TOOLS() {
-        return true;
+        return false;
     }
 
     public static String MODID = "divine_missions";

@@ -1,6 +1,6 @@
 package com.robertx22.divine_missions.database.db_types;
 
-import com.robertx22.divine_missions.database.RegistryTypes;
+import com.robertx22.divine_missions.db_init.RegistryTypes;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.util.FormatUtils;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;

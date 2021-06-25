@@ -16,6 +16,10 @@ public class PlayerRepudationData {
         return map.getOrDefault(god.GUID(), 0);
     }
 
+    public void resetAll() {
+        map.clear();
+    }
+
     public void addReputation(int rep, God god) {
 
         int points = map.getOrDefault(god.GUID(), 0) + rep;

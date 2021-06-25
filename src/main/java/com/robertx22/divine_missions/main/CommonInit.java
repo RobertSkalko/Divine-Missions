@@ -1,12 +1,7 @@
 package com.robertx22.divine_missions.main;
 
 import com.robertx22.divine_missions.configs.MissionsConfig;
-import com.robertx22.divine_missions.data_gen.AddToSeriazables;
-import com.robertx22.divine_missions.database.AddRegistryContainers;
-import com.robertx22.divine_missions.database.RegistryTypes;
-import com.robertx22.divine_missions.database.adders.ConditionTypeAdders;
-import com.robertx22.divine_missions.database.adders.RewardTypeAdders;
-import com.robertx22.divine_missions.database.adders.TaskTypesAdder;
+import com.robertx22.divine_missions.db_init.RegistryInit;
 import com.robertx22.divine_missions.packets.PickMissionPacket;
 import com.robertx22.library_of_exile.main.Packets;
 import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
@@ -27,16 +22,7 @@ public class CommonInit implements ModInitializer {
 
         AutoConfig.register(MissionsConfig.class, JanksonConfigSerializer::new);
 
-        AddRegistryContainers.addAll();
-        RegistryTypes.init();
-
-        new TaskTypesAdder().registerAll();
-        new RewardTypeAdders().registerAll();
-        new ConditionTypeAdders().registerAll();
-
-        if (DivineMissions.RUN_DEV_TOOLS()) {
-            AddToSeriazables.addAll();
-        }
+        RegistryInit.init();
 
         System.out.println("Divine Missions loaded.");
     }

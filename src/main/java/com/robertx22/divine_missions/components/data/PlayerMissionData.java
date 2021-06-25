@@ -37,15 +37,20 @@ public class PlayerMissionData {
     public void generateNew(PlayerEntity player) {
 
         this.missions = new HashMap<>();
-        this.picks = RandomUtils.RandomRange(2, 4);
+        this.picks = RandomUtils.RandomRange(MissionsConfig.get().MIN_MISSIONS_TO_PICK, MissionsConfig.get().MAX_MISSIONS_TO_PICK);
 
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < MissionsConfig.get().MISSIONS_TO_GENERATE_EACH_TIME; i++) {
             ItemStack stack = MissionUtil.createRandomMissionItem(player);
 
             missions.put(i, stack);
         }
 
-        mission_cd = MissionsConfig.get().MINUTES_OF_COOLDOWN_TO_REFRESH_MISSIONS * 60 * 20;
+        int cd = MissionsConfig.get().MINUTES_OF_COOLDOWN_TO_REFRESH_MISSIONS * 60 * 20;
+
+        int cdmin = cd - (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION);
+        int cdmax = cd + (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION);
+
+        this.mission_cd = RandomUtils.RandomRange(cdmin, cdmax);
 
         PlayerMissions.KEY.sync(player);
 

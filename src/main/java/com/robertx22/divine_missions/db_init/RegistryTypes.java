@@ -1,4 +1,4 @@
-package com.robertx22.divine_missions.database;
+package com.robertx22.divine_missions.db_init;
 
 import com.robertx22.divine_missions.database.db_types.*;
 import com.robertx22.divine_missions.main.DivineMissions;
@@ -17,7 +17,6 @@ public class RegistryTypes {
     public static ExileRegistryType TASK_ENTRY = ExileRegistryType.register(DivineMissions.MODID, "task_entry", 0, TaskEntry.SERIALIZER, SyncTime.ON_LOGIN);
     public static ExileRegistryType REWARD = ExileRegistryType.register(DivineMissions.MODID, "reward", 0, Reward.SERIALIZER, SyncTime.ON_LOGIN);
     public static ExileRegistryType POOL = ExileRegistryType.register(DivineMissions.MODID, "pool", 0, Pool.SERIALIZER, SyncTime.NEVER);
-    public static ExileRegistryType POOL_INJECTORS = ExileRegistryType.register(DivineMissions.MODID, "pool", 0, Pool.SERIALIZER, SyncTime.NEVER);
 
     public static void init() {
 

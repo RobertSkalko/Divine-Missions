@@ -1,4 +1,4 @@
-package com.robertx22.divine_missions.database;
+package com.robertx22.divine_missions.db_init;
 
 import com.robertx22.library_of_exile.registry.Database;
 import com.robertx22.library_of_exile.registry.ExileRegistryContainer;

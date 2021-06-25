@@ -1,8 +1,8 @@
-package com.robertx22.divine_missions.data_gen;
+package com.robertx22.divine_missions.db_init;
 
 import com.robertx22.divine_missions.data_gen.adders.*;
 
-public class AddToSeriazables {
+public class AddToDataGen {
 
     public static void addAll() {
 
