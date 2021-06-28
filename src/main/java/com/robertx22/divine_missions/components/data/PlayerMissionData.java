@@ -20,7 +20,7 @@ public class PlayerMissionData {
     @Store
     public HashMap<Integer, ItemStack> missions = new HashMap<>();
     @Store
-    public int picks = 3;
+    public int picks = 0;
     @Store
     public int mission_cd = 10000;
 

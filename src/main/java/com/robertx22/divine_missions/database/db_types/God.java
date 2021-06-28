@@ -14,6 +14,7 @@ import net.minecraft.util.Formatting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class God implements JsonExileRegistry<God>, IAutoGson<God> {
     public static God SERIALIZER = new God();
@@ -45,7 +46,7 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
         return list;
     }
 
-    public List<Pool> getRandomPoolsToUse(PlayerEntity player, Pool.PoolType type, MissionRarity rar) {
+    public List<Pool> getRandomPoolsToUse(PlayerEntity player, Pool.PoolType type, MissionRarity rar, Predicate<Pool> pred) {
         List<Pool> pools = getPoolsForThisGod(player, type);
 
         int amount = RandomUtils.RandomRange(rar.min_tasks, rar.max_tasks);
@@ -61,6 +62,8 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
                     pickrandom.add(x);
                 }
             });
+
+        pickrandom.removeIf(x -> !pred.test(x));
 
         if (!pickrandom.isEmpty()) {
             while (touse.size() < amount) {

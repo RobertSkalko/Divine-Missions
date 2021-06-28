@@ -69,7 +69,7 @@ public class MissionUtil {
 
         data.rar = rar.id;
 
-        List<Pool> touse = god.getRandomPoolsToUse(player, Pool.PoolType.TASKS, rar);
+        List<Pool> touse = god.getRandomPoolsToUse(player, Pool.PoolType.TASKS, rar, x -> true);
 
         int totalWorth = 0;
 
@@ -91,14 +91,19 @@ public class MissionUtil {
             totalWorth += taskData.req * task.worth * rar.reward_multi;
         }
 
-        List<Pool> rewardPools = god.getRandomPoolsToUse(player, Pool.PoolType.REWARDS, rar);
+        int finalTotalWorth = totalWorth;
+        List<Pool> rewardPools = god.getRandomPoolsToUse(player, Pool.PoolType.REWARDS, rar, x -> {
+            return x.getRewards()
+                .stream()
+                .anyMatch(e -> finalTotalWorth > e.worth * e.min);
+        });
 
         int worthleft = totalWorth;
 
         // todo add limit with total worth
 
         for (Pool x : rewardPools) {
-            if (worthleft < 0) {
+            if (worthleft < 0 || data.rewards.size() > 3) {
                 continue;
             }
 
@@ -122,7 +127,7 @@ public class MissionUtil {
             int max = worthleft / reward.worth;
 
             rewardData.id = reward.GUID();
-            rewardData.count = (int) (RandomUtils.RandomRange(max, reward.max) * rar.reward_multi);
+            rewardData.count = (int) (RandomUtils.RandomRange(reward.min, reward.max) * rar.reward_multi);
 
             if (rewardData.count > max) {
                 rewardData.count = max;

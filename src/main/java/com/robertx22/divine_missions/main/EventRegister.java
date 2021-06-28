@@ -19,6 +19,7 @@ public class EventRegister {
     static int ticks = 0;
 
     public static void reg() {
+
         ServerTickEvents.END_SERVER_TICK.register(x -> {
             ticks++;
 
@@ -34,7 +35,9 @@ public class EventRegister {
         ExileEvents.CHECK_IF_DEV_TOOLS_SHOULD_RUN.register(new EventConsumer<ExileEvents.OnCheckIsDevToolsRunning>() {
             @Override
             public void accept(ExileEvents.OnCheckIsDevToolsRunning event) {
-                event.run = DivineMissions.RUN_DEV_TOOLS();
+                if (DivineMissions.RUN_DEV_TOOLS()) {
+                    event.run = true;
+                }
             }
         });
 

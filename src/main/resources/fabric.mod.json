@@ -11,7 +11,7 @@
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/divine-missions",
     "sources": "https://github.com/RobertSkalko/Divine-Missions"
   },
-  "license": "",
+  "license": "All Rights Reserved",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
@@ -39,9 +39,7 @@
     "cloth-config2": "*",
     "autoconfig1u": "*",
     "cardinal-components-base": ">=2.8.0",
-    "cardinal-components-entity": ">=2.8.0",
-    "cardinal-components-block": ">=2.8.0",
-    "cardinal-components-world": ">=2.8.0"
+    "cardinal-components-entity": ">=2.8.0"
   },
   "custom": {
     "cardinal-components": [

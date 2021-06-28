@@ -11,7 +11,7 @@ import net.minecraft.util.Formatting;
 public class ItemRewardType extends RewardType {
 
     public ItemRewardType() {
-        this.id = RewardTypeIds.ITEM;
+        super(RewardTypeIds.ITEM);
     }
 
     @Override

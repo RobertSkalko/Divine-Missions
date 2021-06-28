@@ -46,8 +46,23 @@ public class BringItem extends TaskType {
     }
 
     @Override
-    public MutableText getTranslatable(TaskData data) {
+    public int getCurrentDoneTooltip(PlayerEntity player, TaskData data) {
         Item item = Registry.ITEM.get(new Identifier(data.getTaskEntry().data));
+        int inInv = player.inventory.count(item);
+        int current = MathHelper.clamp(inInv + data.curr, 0, data.req);
+        return current;
+    }
+
+    @Override
+    public boolean isTaskDoneTooltip(TaskData data, PlayerEntity player) {
+        return getCurrentDoneTooltip(player, data) >= data.req;
+    }
+
+    @Override
+    public MutableText getTranslatable(PlayerEntity player, TaskData data) {
+
+        Item item = Registry.ITEM.get(new Identifier(data.getTaskEntry().data));
+
         return new TranslatableText(DivineMissions.MODID + ".task." + this.id).append(" ")
             .append(item.getName());
 

@@ -27,9 +27,9 @@ public class TaskData {
         return data;
     }
 
-    public MutableText getTranslated() {
-        return getTaskType().getTranslatable(this)
-            .append(" (" + curr + "/" + req + ")")
+    public MutableText getTranslated(PlayerEntity player) {
+        return getTaskType().getTranslatable(player, this)
+            .append(" (" + getTaskType().getCurrentDoneTooltip(player, this) + "/" + req + ")")
             .formatted(Formatting.RED);
     }
 
@@ -39,6 +39,10 @@ public class TaskData {
 
     public boolean isDone(PlayerEntity player) {
         return getTaskType().isTaskDone(this, player);
+    }
+
+    public boolean isDoneTooltip(PlayerEntity player) {
+        return getTaskType().isTaskDoneTooltip(this, player);
     }
 
     public TaskEntry getTaskEntry() {

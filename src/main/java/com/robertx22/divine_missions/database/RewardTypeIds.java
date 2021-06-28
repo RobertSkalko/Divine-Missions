@@ -7,5 +7,6 @@ public class RewardTypeIds {
     public static String LOOT_TABLE = "give_loot_table";
     public static String AOE_EXP = "give_age_of_exile_exp";
     public static String FAVOR = "give_age_of_exile_favor";
+    public static String COMMAND = "use_command";
 
 }

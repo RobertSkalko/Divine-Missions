@@ -9,7 +9,7 @@ import net.minecraft.text.MutableText;
 
 public abstract class RewardType implements ExileRegistry<RewardType> {
 
-    public static RewardType SERIALIZER = new RewardType() {
+    public static RewardType SERIALIZER = new RewardType("") {
         @Override
         public void giveReward(PlayerEntity player, RewardData data) {
 
@@ -23,6 +23,10 @@ public abstract class RewardType implements ExileRegistry<RewardType> {
 
     public int weight = 1000;
     public String id = "";
+
+    public RewardType(String id) {
+        this.id = id;
+    }
 
     public abstract void giveReward(PlayerEntity player, RewardData data);
 

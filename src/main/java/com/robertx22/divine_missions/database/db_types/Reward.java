@@ -23,7 +23,6 @@ public class Reward implements JsonExileRegistry<Reward>, IAutoGson<Reward> {
 
     public MutableText getTranslated(RewardData data) {
         return getRewardType().getTranslatable(data);
-
     }
 
     public RewardType getRewardType() {
@@ -49,6 +48,16 @@ public class Reward implements JsonExileRegistry<Reward>, IAutoGson<Reward> {
     @Override
     public Class<Reward> getClassForSerialization() {
         return Reward.class;
+    }
+
+    @Override
+    public boolean isRegistryEntryValid() {
+        if (worth < 1) {
+            // causes division by zero problems
+            System.out.println("Worth of a reward can't be less than 1: " + id);
+            return false;
+        }
+        return true;
     }
 }
 

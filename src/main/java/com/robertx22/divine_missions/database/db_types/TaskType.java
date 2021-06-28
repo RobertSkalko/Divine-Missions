@@ -15,7 +15,7 @@ public abstract class TaskType implements ExileRegistry<TaskType> {
         }
 
         @Override
-        public MutableText getTranslatable(TaskData data) {
+        public MutableText getTranslatable(PlayerEntity player, TaskData data) {
             return null;
         }
     };
@@ -31,11 +31,19 @@ public abstract class TaskType implements ExileRegistry<TaskType> {
         return data.curr >= data.req;
     }
 
+    public boolean isTaskDoneTooltip(TaskData data, PlayerEntity player) {
+        return isTaskDone(data, player);
+    }
+
+    public int getCurrentDoneTooltip(PlayerEntity player, TaskData data) {
+        return data.curr;
+    }
+
     public void spendItems(PlayerEntity player, TaskData data) {
 
     }
 
-    public abstract MutableText getTranslatable(TaskData data);
+    public abstract MutableText getTranslatable(PlayerEntity player, TaskData data);
 
     @Override
     public ExileRegistryType getExileRegistryType() {

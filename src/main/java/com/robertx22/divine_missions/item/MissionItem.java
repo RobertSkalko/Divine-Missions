@@ -1,15 +1,21 @@
 package com.robertx22.divine_missions.item;
 
+import com.robertx22.divine_missions.components.PlayerReputation;
+import com.robertx22.divine_missions.database.TaskTypeIds;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.saving.MissionItemData;
+import com.robertx22.divine_missions.util.ClientOnly;
+import com.robertx22.divine_missions.util.MissionUtil;
 import com.robertx22.library_of_exile.utils.SoundUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
@@ -53,6 +59,14 @@ public class MissionItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity.age % 20 == 0) {
+
+            if (entity instanceof ServerPlayerEntity) {
+                if (!MissionItemData.SAVER.has(stack)) {
+                    MissionItemData data = MissionUtil.createRandom((PlayerEntity) entity);
+                    MissionItemData.SAVER.saveTo(stack, data);
+                }
+            }
+
             tick(stack);
         }
     }
@@ -138,7 +152,7 @@ public class MissionItem extends Item {
                     .formatted(Formatting.GOLD));
 
                 data.tasks.forEach(x -> {
-                    tooltip.add(x.getTranslated());
+                    tooltip.add(x.getTranslated(ClientOnly.getPlayer()));
                 });
                 tooltip.add(new LiteralText(""));
 
@@ -156,6 +170,27 @@ public class MissionItem extends Item {
                         .getTranslatable())
                     .formatted(data.getGod()
                         .getFormat()));
+
+                if (data.canFinishTooltip(ClientOnly.getPlayer())) {
+                    tooltip.add(new LiteralText(""));
+                    tooltip.add(DivineMissions.ofTranslation("click_to_turn_in")
+                        .formatted(Formatting.BLUE));
+                }
+
+                if (FabricLoader.getInstance()
+                    .isModLoaded("mmorpg")) {
+                    if (data.tasks.stream()
+                        .anyMatch(x -> x.getTaskType().id.equals(TaskTypeIds.ANY_MOB_KILL))) {
+                        if (data.tasks.stream()
+                            .allMatch(x -> x.curr == 0)) {
+                            if (PlayerReputation.KEY.get(ClientOnly.getPlayer())
+                                .getReputationLevel(data.getGod()).rank == 0) {
+                                tooltip.add(DivineMissions.ofTranslation("aoe_level_range_tip")
+                                    .formatted(Formatting.BLUE));
+                            }
+                        }
+                    }
+                }
 
             }
         } catch (Exception e) {

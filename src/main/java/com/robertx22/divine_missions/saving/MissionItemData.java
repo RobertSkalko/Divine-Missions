@@ -49,18 +49,27 @@ public class MissionItemData {
 
     public void giveRewards(PlayerEntity player) {
 
+        int repreward = rep * 2;
+
         PlayerReputation.KEY.get(player)
-            .addReputation(rep, getGod());
+            .addReputation(repreward, getGod());
 
         this.rewards.forEach(x -> x.give(player));
 
-        player.sendMessage(new LiteralText("+" + rep + " ").append(getGod().getTranslatable())
+        player.sendMessage(new LiteralText("+" + repreward + " ").append(getGod().getTranslatable())
             .append(" ")
             .append(new TranslatableText(DivineMissions.MODID + ".aspect"))
             .append(" ")
             .append(new TranslatableText(DivineMissions.MODID + ".reputation"))
             .formatted(Formatting.GREEN), false);
 
+    }
+
+    public boolean canFinishTooltip(PlayerEntity player) {
+        return tasks.stream()
+            .allMatch(x -> {
+                return x.isDoneTooltip(player);
+            });
     }
 
     public boolean canFinish(PlayerEntity player) {

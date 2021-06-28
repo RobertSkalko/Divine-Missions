@@ -22,7 +22,7 @@ import java.util.List;
 public class LootTableRewardType extends RewardType {
 
     public LootTableRewardType() {
-        this.id = RewardTypeIds.LOOT_TABLE;
+        super(RewardTypeIds.LOOT_TABLE);
     }
 
     @Override
