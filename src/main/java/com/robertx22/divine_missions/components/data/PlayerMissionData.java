@@ -3,7 +3,7 @@ package com.robertx22.divine_missions.components.data;
 import com.robertx22.divine_missions.components.PlayerMissions;
 import com.robertx22.divine_missions.configs.MissionsConfig;
 import com.robertx22.divine_missions.main.DivineMissions;
-import com.robertx22.divine_missions.util.MissionUtil;
+import com.robertx22.divine_missions.mission_gen.MissionUtil;
 import com.robertx22.library_of_exile.utils.RandomUtils;
 import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;

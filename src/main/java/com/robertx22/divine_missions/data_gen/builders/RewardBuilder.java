@@ -41,6 +41,11 @@ public class RewardBuilder {
         return this;
     }
 
+    public RewardBuilder worthType(String type) {
+        this.reward.worth_type = type;
+        return this;
+    }
+
     public static RewardBuilder item(int worth) {
         RewardBuilder b = new RewardBuilder();
         b.reward.type = RewardTypeIds.ITEM;

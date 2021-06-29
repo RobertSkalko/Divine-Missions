@@ -1,6 +1,7 @@
 package com.robertx22.divine_missions.database.db_types;
 
 import com.robertx22.divine_missions.database.MissionsDB;
+import com.robertx22.divine_missions.database.WorthTypeIds;
 import com.robertx22.divine_missions.db_init.RegistryTypes;
 import com.robertx22.divine_missions.saving.RewardData;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
@@ -15,6 +16,8 @@ public class Reward implements JsonExileRegistry<Reward>, IAutoGson<Reward> {
     public String id = "";
 
     public int worth = 1;
+    public String worth_type = WorthTypeIds.DEFAULT;
+
     public String type = "";
 
     public String data = "";

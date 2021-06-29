@@ -1,6 +1,7 @@
 package com.robertx22.divine_missions.data_gen.builders;
 
 import com.robertx22.divine_missions.database.TaskTypeIds;
+import com.robertx22.divine_missions.database.WorthTypeIds;
 import com.robertx22.divine_missions.database.db_types.TaskEntry;
 import com.robertx22.divine_missions.util.MinMax;
 import net.minecraft.entity.EntityType;
@@ -13,7 +14,7 @@ public class TaskEntryBuilder {
         TaskEntry en = new TaskEntry();
         en.id = "kill_" + Registry.ENTITY_TYPE.getId(type)
             .getPath();
-        en.worth = worth;
+        en.worths.put(WorthTypeIds.DEFAULT, worth);
         en.min = minmax.min;
         en.max = minmax.max;
         en.weight = weight;
@@ -29,7 +30,8 @@ public class TaskEntryBuilder {
         TaskEntry en = new TaskEntry();
         en.weight = 2000;
         en.id = id;
-        en.worth = worth;
+        en.worths.put(WorthTypeIds.DEFAULT, worth);
+        en.worths.put(WorthTypeIds.AGE_OF_EXILE, worth);
         en.seconds = seconds;
         en.min = minmax.min;
         en.max = minmax.max;
@@ -42,7 +44,8 @@ public class TaskEntryBuilder {
         TaskEntry en = new TaskEntry();
         en.weight = weight;
         en.id = id;
-        en.worth = worth;
+        en.worths.put(WorthTypeIds.DEFAULT, worth);
+        en.worths.put(WorthTypeIds.AGE_OF_EXILE, worth);
         en.seconds = seconds;
         en.min = minmax.min;
         en.max = minmax.max;
@@ -59,7 +62,7 @@ public class TaskEntryBuilder {
         en.weight = weight;
         en.data = Registry.ITEM.getId(item)
             .toString();
-        en.worth = worth;
+        en.worths.put(WorthTypeIds.DEFAULT, worth);
         en.min = minmax.min;
         en.max = minmax.max;
         en.seconds = 60;

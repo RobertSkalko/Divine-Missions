@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.saving.MissionItemData;
 import com.robertx22.divine_missions.saving.TaskData;
-import com.robertx22.divine_missions.util.MissionUtil;
+import com.robertx22.divine_missions.mission_gen.MissionUtil;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;

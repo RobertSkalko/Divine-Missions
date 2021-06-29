@@ -1,13 +1,15 @@
-package com.robertx22.divine_missions.util;
+package com.robertx22.divine_missions.mission_gen;
 
 import com.robertx22.divine_missions.components.PlayerReputation;
 import com.robertx22.divine_missions.database.MissionsDB;
+import com.robertx22.divine_missions.database.WorthTypeIds;
 import com.robertx22.divine_missions.database.db_types.*;
 import com.robertx22.divine_missions.item.MissionItem;
 import com.robertx22.divine_missions.main.ModItems;
 import com.robertx22.divine_missions.saving.MissionItemData;
 import com.robertx22.divine_missions.saving.RewardData;
 import com.robertx22.divine_missions.saving.TaskData;
+import com.robertx22.divine_missions.util.GodWeight;
 import com.robertx22.library_of_exile.utils.RandomUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -71,7 +73,7 @@ public class MissionUtil {
 
         List<Pool> touse = god.getRandomPoolsToUse(player, Pool.PoolType.TASKS, rar, x -> true);
 
-        int totalWorth = 0;
+        WorthsData worths = new WorthsData();
 
         for (Pool x : touse) {
 
@@ -85,35 +87,89 @@ public class MissionUtil {
 
             TaskEntry task = RandomUtils.weightedRandom(possible);
 
-            TaskData taskData = TaskData.createNew(task, (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi));
+            int count = 1;
+            
+            try {
+                count = (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            TaskData taskData = TaskData.createNew(task, count);
             data.tasks.add(taskData);
 
-            totalWorth += taskData.req * task.worth * rar.reward_multi;
+            worths.add(task.worths, taskData.req, rar.reward_multi);
         }
 
-        int finalTotalWorth = totalWorth;
-        List<Pool> rewardPools = god.getRandomPoolsToUse(player, Pool.PoolType.REWARDS, rar, x -> {
-            return x.getRewards()
-                .stream()
-                .anyMatch(e -> finalTotalWorth > e.worth * e.min);
+        data.god = god.GUID();
+
+        int tries = 0;
+
+        while (data.rewards.size() < 1) {
+            tries++;
+            if (tries > 5) {
+                worths.add(WorthTypeIds.DEFAULT, 10);
+            }
+            if (tries > 10) {
+                break;
+            }
+            addRewards(data, worths, player, rar);
+        }
+
+        spendRemainingWorth(data, worths, player);
+
+        data.rep = worths.totalReduced / 100;
+
+// TODO
+        return data;
+    }
+
+    private static void spendRemainingWorth(MissionItemData data, WorthsData worths, PlayerEntity player) {
+
+        data.rewards.forEach(x -> {
+            if (x.getReward().max > x.count) {
+
+                int canadd = worths.getWorth(x.getReward().worth_type) / x.getSingleWorth();
+
+                if (canadd > 0) {
+
+                    int max = x.getReward().max - x.count;
+
+                    if (canadd > max) {
+                        canadd = max;
+                    }
+
+                    x.count += canadd;
+
+                    worths.reduce(x.getReward().worth_type, canadd * x.getSingleWorth());
+                }
+            }
+
         });
 
-        int worthleft = totalWorth;
+    }
 
+    private static void addRewards(MissionItemData data, WorthsData worths, PlayerEntity player, MissionRarity rar) {
         // todo add limit with total worth
-
+        List<Pool> rewardPools = data.getGod()
+            .getRandomPoolsToUse(player, Pool.PoolType.REWARDS, rar, x -> {
+                return x.getRewards()
+                    .stream()
+                    .anyMatch(e -> {
+                        return worths.getWorth(e.worth_type) > e.worth * e.min;
+                    });
+            });
         for (Pool x : rewardPools) {
-            if (worthleft < 0 || data.rewards.size() > 3) {
+            if (data.rewards.size() > 3) {
                 continue;
             }
 
             List<String> alreadyUsed = data.rewards.stream()
                 .map(e -> e.id)
                 .collect(Collectors.toList());
-            int finalWorthleft = worthleft;
             List<Reward> possible = x.getRewards()
                 .stream()
-                .filter(e -> finalWorthleft > e.worth * e.min)
+                .filter(e -> worths.getWorth(e.worth_type) > e.worth * e.min)
                 .filter(e -> !alreadyUsed.contains(e.id))
                 .collect(Collectors.toList());
 
@@ -124,7 +180,7 @@ public class MissionUtil {
             Reward reward = RandomUtils.weightedRandom(possible);
             RewardData rewardData = new RewardData();
 
-            int max = worthleft / reward.worth;
+            int max = worths.getWorth(reward.worth_type) / reward.worth;
 
             rewardData.id = reward.GUID();
             rewardData.count = (int) (RandomUtils.RandomRange(reward.min, reward.max) * rar.reward_multi);
@@ -140,20 +196,14 @@ public class MissionUtil {
                 int tens = rewardData.count / 10;
                 rewardData.count = tens * 10;
             }
-            worthleft -= rewardData.count * reward.worth;
+
+            worths.reduce(reward.worth_type, rewardData.count * reward.worth);
 
             if (rewardData.count > 0) {
                 data.rewards.add(rewardData);
             }
 
         }
-
-        data.god = god.GUID();
-
-        data.rep = totalWorth / 100;
-
-// TODO
-        return data;
     }
 
     public static List<ItemStack> getCurrentMissions(PlayerEntity player) {

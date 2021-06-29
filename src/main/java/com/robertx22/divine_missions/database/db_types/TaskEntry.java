@@ -6,6 +6,8 @@ import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
 
+import java.util.HashMap;
+
 public class TaskEntry implements JsonExileRegistry<TaskEntry>, IAutoGson<TaskEntry> {
     public static TaskEntry SERIALIZER = new TaskEntry();
 
@@ -16,8 +18,9 @@ public class TaskEntry implements JsonExileRegistry<TaskEntry>, IAutoGson<TaskEn
     public String data = "";
     public int min = 1;
     public int max = 3;
-    public int worth = 1;
     public int seconds = 0;
+
+    public HashMap<String, Integer> worths = new HashMap<>();
 
     public TaskType getType() {
         return MissionsDB.TaskTypes()

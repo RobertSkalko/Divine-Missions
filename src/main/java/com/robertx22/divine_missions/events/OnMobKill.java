@@ -1,7 +1,7 @@
 package com.robertx22.divine_missions.events;
 
 import com.robertx22.divine_missions.database.TaskTypeIds;
-import com.robertx22.divine_missions.util.MissionUtil;
+import com.robertx22.divine_missions.mission_gen.MissionUtil;
 import com.robertx22.library_of_exile.events.base.EventConsumer;
 import com.robertx22.library_of_exile.events.base.ExileEvents;
 import net.minecraft.entity.mob.HostileEntity;

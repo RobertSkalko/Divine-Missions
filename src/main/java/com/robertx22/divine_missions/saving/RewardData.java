@@ -18,6 +18,14 @@ public class RewardData {
     @Store
     public int count = 1;
 
+    public int getWorth() {
+        return count * getReward().worth;
+    }
+
+    public int getSingleWorth() {
+        return count * getReward().worth;
+    }
+
     public ItemStack getStack() {
         return new ItemStack(Registry.ITEM.get(new Identifier(getReward().data)), count);
     }
