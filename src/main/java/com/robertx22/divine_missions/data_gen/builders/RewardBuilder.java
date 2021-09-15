@@ -10,7 +10,7 @@ public class RewardBuilder {
 
     Reward reward = new Reward();
 
-    public static Reward lootTable(int worth, int weight, Identifier loottable) {
+    public static RewardBuilder lootTable(int worth, int weight, Identifier loottable) {
         RewardBuilder b = new RewardBuilder();
         b.reward.id = loottable.toString()
             .replace(":", "_");
@@ -20,8 +20,7 @@ public class RewardBuilder {
         b.reward.max = 1;
         b.reward.worth = worth;
         b.reward.data = loottable.toString();
-        b.reward.addToSerializables();
-        return b.reward;
+        return b;
     }
 
     public static Reward exp(int worth, String id, int min, int max) {
@@ -51,6 +50,11 @@ public class RewardBuilder {
         b.reward.type = RewardTypeIds.ITEM;
         b.reward.worth = worth;
         return b;
+    }
+
+    public Reward build() {
+        reward.addToSerializables();
+        return reward;
     }
 
     public Reward build(Item item, int min, int max) {

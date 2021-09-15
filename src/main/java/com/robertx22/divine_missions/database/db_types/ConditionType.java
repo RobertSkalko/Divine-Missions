@@ -8,14 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public abstract class ConditionType implements ExileRegistry<ConditionType> {
 
-    public static ConditionType SERIALIZER = new ConditionType("ds") {
-
-        @Override
-        public boolean isAllowed(PlayerEntity player, ConditionData data) {
-            return false;
-        }
-    };
-
     public int weight = 1000;
     public String id = "";
 

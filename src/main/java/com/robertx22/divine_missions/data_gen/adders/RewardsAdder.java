@@ -26,14 +26,21 @@ public class RewardsAdder {
     public static Reward EXPERIENCE = RewardBuilder.exp(2, "exp", 1, 1000);
     public static Reward BIG_EXP = RewardBuilder.exp(1, "big_exp", 200, 1500);
 
-    public static Reward ENCHANTED_BOOK_LOOT_TABLE = RewardBuilder.lootTable(1000, 100, DivineMissions.id("enchanted_book"));
-    public static Reward ENCHANTED_DIAMOND_PICKAXE = RewardBuilder.lootTable(1500, 50, DivineMissions.id("enchanted_diamond_pickaxe"));
-    public static Reward ENCHANTED_DIAMOND_AXE = RewardBuilder.lootTable(1500, 50, DivineMissions.id("enchanted_diamond_axe"));
+    public static Reward ENCHANTED_BOOK_LOOT_TABLE = RewardBuilder.lootTable(1000, 100, DivineMissions.id("enchanted_book"))
+        .build();
+    public static Reward ENCHANTED_DIAMOND_PICKAXE = RewardBuilder.lootTable(1500, 50, DivineMissions.id("enchanted_diamond_pickaxe"))
+        .build();
+    public static Reward ENCHANTED_DIAMOND_AXE = RewardBuilder.lootTable(1500, 50, DivineMissions.id("enchanted_diamond_axe"))
+        .build();
 
-    public static Reward ENCHANTED_FISHING_ROD_LOOT_TABLE = RewardBuilder.lootTable(1000, 100, DivineMissions.id("enchanted_rod"));
-    public static Reward DUNGEON_CHEST_LOOT_TABLE = RewardBuilder.lootTable(1000, 50, LootTables.SIMPLE_DUNGEON_CHEST);
-    public static Reward BURIED_TREASURE_LOOT_TABLE = RewardBuilder.lootTable(2000, 25, LootTables.BURIED_TREASURE_CHEST);
-    public static Reward END_CITY_CHEST_LOOT_TABLE = RewardBuilder.lootTable(2500, 15, LootTables.END_CITY_TREASURE_CHEST);
+    public static Reward ENCHANTED_FISHING_ROD_LOOT_TABLE = RewardBuilder.lootTable(1000, 100, DivineMissions.id("enchanted_rod"))
+        .build();
+    public static Reward DUNGEON_CHEST_LOOT_TABLE = RewardBuilder.lootTable(1000, 50, LootTables.SIMPLE_DUNGEON_CHEST)
+        .build();
+    public static Reward BURIED_TREASURE_LOOT_TABLE = RewardBuilder.lootTable(2000, 25, LootTables.BURIED_TREASURE_CHEST)
+        .build();
+    public static Reward END_CITY_CHEST_LOOT_TABLE = RewardBuilder.lootTable(2500, 15, LootTables.END_CITY_TREASURE_CHEST)
+        .build();
 
     public static void init() {
 

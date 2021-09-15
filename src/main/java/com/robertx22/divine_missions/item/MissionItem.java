@@ -59,14 +59,16 @@ public class MissionItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (entity.age % 20 == 0) {
-
-            if (entity instanceof ServerPlayerEntity) {
-                if (!MissionItemData.SAVER.has(stack)) {
-                    MissionItemData data = MissionUtil.createRandom((PlayerEntity) entity);
-                    MissionItemData.SAVER.saveTo(stack, data);
+            try {
+                if (entity instanceof ServerPlayerEntity) {
+                    if (!MissionItemData.SAVER.has(stack)) {
+                        MissionItemData data = MissionUtil.createRandom((PlayerEntity) entity);
+                        MissionItemData.SAVER.saveTo(stack, data);
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
             tick(stack);
         }
     }
@@ -87,7 +89,11 @@ public class MissionItem extends Item {
             MissionItemData.SAVER.saveTo(stack, data);
 
             if (data.canFinish(user)) {
-                data.giveRewards(user);
+                try {
+                    data.giveRewards(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 stack.decrement(1);
 
                 SoundUtils.ding(world, user.getBlockPos());

@@ -54,7 +54,11 @@ public class MissionItemData {
         PlayerReputation.KEY.get(player)
             .addReputation(repreward, getGod());
 
-        this.rewards.forEach(x -> x.give(player));
+        try {
+            this.rewards.forEach(x -> x.give(player));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         player.sendMessage(new LiteralText("+" + repreward + " ").append(getGod().getTranslatable())
             .append(" ")

@@ -1,10 +1,7 @@
 package com.robertx22.divine_missions.main;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.robertx22.divine_missions.commands.CompleteAllMissions;
-import com.robertx22.divine_missions.commands.GiveMission;
-import com.robertx22.divine_missions.commands.RefreshMissions;
-import com.robertx22.divine_missions.commands.ResetReputations;
+import com.robertx22.divine_missions.commands.*;
 import com.robertx22.divine_missions.components.PlayerMissions;
 import com.robertx22.divine_missions.events.OnChestLooted;
 import com.robertx22.divine_missions.events.OnMobKill;
@@ -44,6 +41,7 @@ public class EventRegister {
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager()
                 .getDispatcher();
+            GiveReputation.register(dispatcher);
             ResetReputations.register(dispatcher);
             GiveMission.register(dispatcher);
             CompleteAllMissions.register(dispatcher);

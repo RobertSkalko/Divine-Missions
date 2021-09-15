@@ -18,6 +18,5 @@ public class LootChest extends TaskType {
     @Override
     public MutableText getTranslatable(PlayerEntity player, TaskData data) {
         return new TranslatableText(DivineMissions.MODID + ".loot_chest").formatted(Formatting.GOLD);
-
     }
 }

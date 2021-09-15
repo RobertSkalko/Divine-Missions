@@ -23,7 +23,14 @@ import java.util.stream.Collectors;
 public class MissionUtil {
 
     public static ItemStack createRandomMissionItem(PlayerEntity player) {
-        MissionItemData data = createRandom(player);
+
+        MissionItemData data = null;
+        try {
+            data = createRandom(player);
+        } catch (Exception e) {
+            e.printStackTrace();
+            data = createRandom(player);
+        }
 
         ItemStack stack = new ItemStack(ModItems.INSTANCE.MISSION_ITEM);
 
@@ -82,23 +89,26 @@ public class MissionUtil {
                 .collect(Collectors.toList());
             List<TaskEntry> possible = x.getTaskEntries()
                 .stream()
+                .filter(e -> e.getType() != null)
                 .filter(e -> !alreadyUsed.contains(e.id))
                 .collect(Collectors.toList());
 
             TaskEntry task = RandomUtils.weightedRandom(possible);
+            if (task != null) {
 
-            int count = 1;
-            
-            try {
-                count = (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi);
-            } catch (Exception e) {
-                e.printStackTrace();
+                int count = 1;
+
+                try {
+                    count = (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                TaskData taskData = TaskData.createNew(task, count);
+                data.tasks.add(taskData);
+
+                worths.add(task.worths, taskData.req, rar.reward_multi);
             }
-
-            TaskData taskData = TaskData.createNew(task, count);
-            data.tasks.add(taskData);
-
-            worths.add(task.worths, taskData.req, rar.reward_multi);
         }
 
         data.god = god.GUID();
@@ -120,7 +130,6 @@ public class MissionUtil {
 
         data.rep = worths.totalReduced / 100;
 
-// TODO
         return data;
     }
 

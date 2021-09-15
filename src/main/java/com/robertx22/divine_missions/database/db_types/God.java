@@ -66,7 +66,11 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
         pickrandom.removeIf(x -> !pred.test(x));
 
         if (!pickrandom.isEmpty()) {
-            while (touse.size() < amount) {
+            if (type == Pool.PoolType.TASKS) {
+                while (touse.size() < amount) {
+                    touse.add(RandomUtils.weightedRandom(pickrandom));
+                }
+            } else {
                 touse.add(RandomUtils.weightedRandom(pickrandom));
             }
         }
