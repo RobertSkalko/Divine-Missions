@@ -1,11 +1,11 @@
 package com.robertx22.divine_missions.util;
 
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.TextFormatting;
 
 public class FormatUtils {
 
-    public static Formatting of(String name) {
-        Formatting format = Formatting.byName(name);
-        return format == null ? Formatting.GRAY : format;
+    public static TextFormatting of(String name) {
+        TextFormatting format = TextFormatting.getByName(name);
+        return format == null ? TextFormatting.GRAY : format;
     }
 }

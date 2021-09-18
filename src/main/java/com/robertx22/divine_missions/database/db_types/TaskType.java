@@ -5,7 +5,7 @@ import com.robertx22.divine_missions.saving.TaskData;
 import com.robertx22.library_of_exile.registry.ExileRegistry;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.MutableText;
+import net.minecraft.util.text.IFormattableTextComponent;
 
 public abstract class TaskType implements ExileRegistry<TaskType> {
     public static TaskType SERIALIZER = new TaskType("") {
@@ -15,7 +15,7 @@ public abstract class TaskType implements ExileRegistry<TaskType> {
         }
 
         @Override
-        public MutableText getTranslatable(PlayerEntity player, TaskData data) {
+        public IFormattableTextComponent getTranslatable(PlayerEntity player, TaskData data) {
             return null;
         }
     };
@@ -43,7 +43,7 @@ public abstract class TaskType implements ExileRegistry<TaskType> {
 
     }
 
-    public abstract MutableText getTranslatable(PlayerEntity player, TaskData data);
+    public abstract IFormattableTextComponent getTranslatable(PlayerEntity player, TaskData data);
 
     @Override
     public ExileRegistryType getExileRegistryType() {

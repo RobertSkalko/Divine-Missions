@@ -1,11 +1,11 @@
 package com.robertx22.divine_missions.data_gen.builders;
 
 import com.robertx22.divine_missions.database.db_types.MissionRarity;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.TextFormatting;
 
 public class MissionRarityBuilder {
 
-    public static MissionRarity of(String id, int rank, int weight, Formatting format, float rewardMulti, float difficultyMulti, int mintasks, int maxtasks) {
+    public static MissionRarity of(String id, int rank, int weight, TextFormatting format, float rewardMulti, float difficultyMulti, int mintasks, int maxtasks) {
 
         MissionRarity r = new MissionRarity();
         r.weight = weight;

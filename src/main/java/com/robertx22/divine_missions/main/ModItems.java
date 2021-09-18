@@ -10,6 +10,6 @@ public class ModItems {
     public static ModItems INSTANCE;
 
     public Item MISSION_ITEM = Registry.register(Registry.ITEM, DivineMissions.id("mission"), new MissionItem());
-    public Item SHRINE = Registry.register(Registry.ITEM, DivineMissions.id("shrine"), new BlockItem(ModBlocks.INSTANCE.SHRINE, new Item.Settings().group(DivineMissions.CreativeTab)));
+    public Item SHRINE = Registry.register(Registry.ITEM, DivineMissions.id("shrine"), new BlockItem(ModBlocks.INSTANCE.SHRINE, new Item.Properties().tab(DivineMissions.CreativeTab)));
 
 }

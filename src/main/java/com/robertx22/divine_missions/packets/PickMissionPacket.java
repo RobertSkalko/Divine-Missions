@@ -5,11 +5,11 @@ import com.robertx22.divine_missions.components.PlayerReputation;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.saving.MissionItemData;
 import com.robertx22.library_of_exile.main.MyPacket;
-import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.NetworkEvent.Context;
 
 public class PickMissionPacket extends MyPacket<PickMissionPacket> {
     int num = 0;
@@ -19,22 +19,22 @@ public class PickMissionPacket extends MyPacket<PickMissionPacket> {
     }
 
     @Override
-    public Identifier getIdentifier() {
+    public ResourceLocation getIdentifier() {
         return DivineMissions.id("pick_mission");
     }
 
     @Override
-    public void loadFromData(PacketByteBuf buf) {
+    public void loadFromData(PacketBuffer buf) {
         this.num = buf.readInt();
     }
 
     @Override
-    public void saveToData(PacketByteBuf buf) {
+    public void saveToData(PacketBuffer buf) {
         buf.writeInt(num);
     }
 
     @Override
-    public void onReceived(PacketContext ctx) {
+    public void onReceived(Context ctx) {
 
         PlayerEntity player = ctx.getPlayer();
 
@@ -49,7 +49,7 @@ public class PickMissionPacket extends MyPacket<PickMissionPacket> {
                     .addReputation(-data.rep, data.getGod()); // upfront cost
 
                 missions.data.picks--;
-                player.inventory.offerOrDrop(player.world, stack);
+                player.inventory.placeItemBackInInventory(player.level, stack);
                 missions.data.missions.remove(num);
 
                 PlayerMissions.KEY.sync(player);

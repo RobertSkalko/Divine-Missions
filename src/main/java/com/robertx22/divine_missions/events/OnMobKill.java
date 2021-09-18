@@ -4,10 +4,10 @@ import com.robertx22.divine_missions.database.TaskTypeIds;
 import com.robertx22.divine_missions.mission_gen.MissionUtil;
 import com.robertx22.library_of_exile.events.base.EventConsumer;
 import com.robertx22.library_of_exile.events.base.ExileEvents;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.Monster;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
 
 public class OnMobKill extends EventConsumer<ExileEvents.OnMobDeath> {
 
@@ -15,11 +15,11 @@ public class OnMobKill extends EventConsumer<ExileEvents.OnMobDeath> {
     public void accept(ExileEvents.OnMobDeath event) {
         if (event.killer instanceof PlayerEntity) {
 
-            if (event.mob instanceof HostileEntity || event.mob instanceof Monster || !event.mob.getType()
-                .getSpawnGroup()
-                .isPeaceful()) {
+            if (event.mob instanceof Monster || event.mob instanceof Enemy || !event.mob.getType()
+                .getCategory()
+                .isFriendly()) {
 
-                String mobId = Registry.ENTITY_TYPE.getId(event.mob.getType())
+                String mobId = Registry.ENTITY_TYPE.getKey(event.mob.getType())
                     .toString();
 
                 boolean validKill = ExileEvents.IS_KILLED_ENTITY_VALID.callEvents(new ExileEvents.IsEntityKilledValid(event.mob, event.killer)).isValid;

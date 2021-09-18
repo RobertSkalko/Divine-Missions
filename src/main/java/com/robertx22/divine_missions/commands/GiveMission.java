@@ -3,27 +3,27 @@ package com.robertx22.divine_missions.commands;
 import com.mojang.brigadier.CommandDispatcher;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.mission_gen.MissionUtil;
-import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.ServerCommandSource;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.command.Commands.argument;
+import static net.minecraft.command.Commands.literal;
 
 public class GiveMission {
 
-    public static void register(CommandDispatcher<ServerCommandSource> commandDispatcher) {
+    public static void register(CommandDispatcher<CommandSource> commandDispatcher) {
         commandDispatcher.register(
             literal(DivineMissions.MODID)
-                .then(literal("give_random_mission").requires(e -> e.hasPermissionLevel(2))
-                    .requires(e -> e.hasPermissionLevel(2))
-                    .then(argument("target", EntityArgumentType.player())
-                        .executes(e -> execute(e.getSource(), EntityArgumentType.getPlayer(e, "target"))))));
+                .then(literal("give_random_mission").requires(e -> e.hasPermission(2))
+                    .requires(e -> e.hasPermission(2))
+                    .then(argument("target", EntityArgument.player())
+                        .executes(e -> execute(e.getSource(), EntityArgument.getPlayer(e, "target"))))));
     }
 
-    private static int execute(ServerCommandSource commandSource, PlayerEntity player) {
+    private static int execute(CommandSource commandSource, PlayerEntity player) {
 
-        player.giveItemStack(MissionUtil.createRandomMissionItem(player));
+        player.addItem(MissionUtil.createRandomMissionItem(player));
 
         return 0;
     }

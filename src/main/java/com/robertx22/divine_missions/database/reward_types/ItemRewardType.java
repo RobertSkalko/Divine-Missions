@@ -4,9 +4,9 @@ import com.robertx22.divine_missions.database.RewardTypeIds;
 import com.robertx22.divine_missions.database.db_types.RewardType;
 import com.robertx22.divine_missions.saving.RewardData;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class ItemRewardType extends RewardType {
 
@@ -16,13 +16,13 @@ public class ItemRewardType extends RewardType {
 
     @Override
     public void giveReward(PlayerEntity player, RewardData data) {
-        player.inventory.offerOrDrop(player.world, data.getStack());
+        player.inventory.placeItemBackInInventory(player.level, data.getStack());
     }
 
     @Override
-    public MutableText getTranslatable(RewardData data) {
-        return new LiteralText(data.count + "x ").append(data.getStack()
-                .getName())
-            .formatted(Formatting.AQUA);
+    public IFormattableTextComponent getTranslatable(RewardData data) {
+        return new StringTextComponent(data.count + "x ").append(data.getStack()
+                .getHoverName())
+            .withStyle(TextFormatting.AQUA);
     }
 }

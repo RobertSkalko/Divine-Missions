@@ -1,22 +1,22 @@
 package com.robertx22.divine_missions.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 
 public class BaseScreen extends Screen {
 
     protected BaseScreen(int width, int height) {
-        super(new LiteralText(""));
+        super(new StringTextComponent(""));
         this.sizeX = width;
         this.sizeY = height;
     }
 
-    public MinecraftClient mc = MinecraftClient.getInstance();
+    public Minecraft mc = Minecraft.getInstance();
 
     public int guiLeft = 0;
     public int guiTop = 0;
@@ -24,14 +24,14 @@ public class BaseScreen extends Screen {
     public int sizeX = 0;
     public int sizeY = 0;
 
-    public void renderBackground(MatrixStack matrix, Identifier id) {
+    public void renderBackground(MatrixStack matrix, ResourceLocation id) {
         mc.getTextureManager()
-            .bindTexture(id);
+            .bind(id);
         RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        drawTexture(matrix, mc.getWindow()
-                .getScaledWidth() / 2 - sizeX / 2,
+        blit(matrix, mc.getWindow()
+                .getGuiScaledWidth() / 2 - sizeX / 2,
             mc.getWindow()
-                .getScaledHeight() / 2 - sizeY / 2, 0, 0, sizeX, sizeY
+                .getGuiScaledHeight() / 2 - sizeY / 2, 0, 0, sizeX, sizeY
         );
     }
 
@@ -49,7 +49,7 @@ public class BaseScreen extends Screen {
         this.guiTop = (this.height - this.sizeY) / 2;
     }
 
-    public <T extends ClickableWidget> T publicAddButton(T w) {
+    public <T extends AbstractWidget> T publicAddButton(T w) {
         return this.addButton(w);
     }
 

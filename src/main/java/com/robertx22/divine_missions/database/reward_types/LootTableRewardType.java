@@ -7,15 +7,15 @@ import com.robertx22.divine_missions.saving.RewardData;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 
@@ -27,32 +27,32 @@ public class LootTableRewardType extends RewardType {
 
     @Override
     public void giveReward(PlayerEntity player, RewardData data) {
-        Identifier loottableId = new Identifier(data.getReward().data);
+        ResourceLocation loottableId = new ResourceLocation(data.getReward().data);
 
-        LootContext lootContext = new LootContext.Builder((ServerWorld) player.world)
-            .parameter(LootContextParameters.THIS_ENTITY, player)
-            .parameter(LootContextParameters.ORIGIN, player.getPos())
-            .parameter(LootContextParameters.TOOL, ItemStack.EMPTY)
-            .parameter(LootContextParameters.BLOCK_STATE, Blocks.AIR.getDefaultState())
-            .build(LootContextTypes.BLOCK);
-        ServerWorld serverWorld = lootContext.getWorld();
+        LootContext lootContext = new LootContext.Builder((ServerWorld) player.level)
+            .withParameter(LootParameters.THIS_ENTITY, player)
+            .withParameter(LootParameters.ORIGIN, player.position())
+            .withParameter(LootParameters.TOOL, ItemStack.EMPTY)
+            .withParameter(LootParameters.BLOCK_STATE, Blocks.AIR.defaultBlockState())
+            .create(LootContextParamSets.BLOCK);
+        ServerWorld serverWorld = lootContext.getLevel();
         LootTable lootTable = serverWorld.getServer()
-            .getLootManager()
-            .getTable(loottableId);
+            .getLootTables()
+            .get(loottableId);
 
-        List<ItemStack> drops = lootTable.generateLoot(lootContext);
+        List<ItemStack> drops = lootTable.getRandomItems(lootContext);
 
         if (drops.isEmpty()) {
             System.out.println(loottableId.toString() + " loot table dropped ZERO items!");
         }
 
-        drops.forEach(x -> player.inventory.offerOrDrop(player.world, x));
+        drops.forEach(x -> player.inventory.placeItemBackInInventory(player.level, x));
     }
 
     @Override
-    public MutableText getTranslatable(RewardData data) {
-        return new LiteralText(data.count + "x ").append(DivineMissions.ofTranslation("loot_table." + data.id))
-            .formatted(Formatting.LIGHT_PURPLE);
+    public IFormattableTextComponent getTranslatable(RewardData data) {
+        return new StringTextComponent(data.count + "x ").append(DivineMissions.ofTranslation("loot_table." + data.id))
+            .withStyle(TextFormatting.LIGHT_PURPLE);
     }
 }
 

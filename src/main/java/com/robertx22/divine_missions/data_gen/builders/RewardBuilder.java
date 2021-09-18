@@ -3,14 +3,14 @@ package com.robertx22.divine_missions.data_gen.builders;
 import com.robertx22.divine_missions.database.RewardTypeIds;
 import com.robertx22.divine_missions.database.db_types.Reward;
 import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 
 public class RewardBuilder {
 
     Reward reward = new Reward();
 
-    public static RewardBuilder lootTable(int worth, int weight, Identifier loottable) {
+    public static RewardBuilder lootTable(int worth, int weight, ResourceLocation loottable) {
         RewardBuilder b = new RewardBuilder();
         b.reward.id = loottable.toString()
             .replace(":", "_");
@@ -58,10 +58,10 @@ public class RewardBuilder {
     }
 
     public Reward build(Item item, int min, int max) {
-        reward.id = Registry.ITEM.getId(item)
+        reward.id = Registry.ITEM.getKey(item)
             .toString()
             .replace(":", "_");
-        return build(Registry.ITEM.getId(item)
+        return build(Registry.ITEM.getKey(item)
             .toString(), min, max);
     }
 

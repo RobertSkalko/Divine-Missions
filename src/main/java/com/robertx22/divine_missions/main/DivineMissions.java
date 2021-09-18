@@ -1,10 +1,9 @@
 package com.robertx22.divine_missions.main;
 
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class DivineMissions {
 
@@ -14,16 +13,19 @@ public class DivineMissions {
 
     public static String MODID = "divine_missions";
 
-    public static Identifier id(String path) {
-        return new Identifier(MODID, path);
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MODID, path);
     }
 
-    public static TranslatableText ofTranslation(String path) {
-        return new TranslatableText(MODID + "." + path);
+    public static TranslationTextComponent ofTranslation(String path) {
+        return new TranslationTextComponent(MODID + "." + path);
     }
 
-    public static ItemGroup CreativeTab = FabricItemGroupBuilder.build(
-        DivineMissions.id("creative_tab"),
-        () -> new ItemStack(ModItems.INSTANCE.SHRINE));
+    public static ItemGroup CreativeTab = new ItemGroup("creative_tab") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(ModItems.INSTANCE.SHRINE);
+        }
+    };
 
 }

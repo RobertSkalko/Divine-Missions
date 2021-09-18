@@ -6,8 +6,8 @@ import com.robertx22.divine_missions.util.FormatUtils;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class ReputationLevel implements JsonExileRegistry<ReputationLevel>, IAutoGson<ReputationLevel> {
     public static ReputationLevel SERIALIZER = new ReputationLevel();
@@ -20,12 +20,12 @@ public class ReputationLevel implements JsonExileRegistry<ReputationLevel>, IAut
     public float weight_multi = 1F;
     public float chance_for_higher_rar = 0;
 
-    public Formatting getFormat() {
+    public TextFormatting getFormat() {
         return FormatUtils.of(format);
     }
 
-    public TranslatableText getTranslatable() {
-        return new TranslatableText(DivineMissions.MODID + ".rep." + id);
+    public TranslationTextComponent getTranslatable() {
+        return new TranslationTextComponent(DivineMissions.MODID + ".rep." + id);
     }
 
     @Override

@@ -7,11 +7,11 @@ import com.robertx22.divine_missions.saving.TaskData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class BringItem extends TaskType {
 
@@ -28,15 +28,15 @@ public class BringItem extends TaskType {
     @Override
     public void spendItems(PlayerEntity player, TaskData data) {
 
-        Item item = Registry.ITEM.get(new Identifier(data.getTaskEntry().data));
+        Item item = Registry.ITEM.get(new ResourceLocation(data.getTaskEntry().data));
 
-        for (ItemStack stack : player.inventory.main) {
+        for (ItemStack stack : player.inventory.items) {
             if (data.curr < data.req) {
                 int tospend = data.req - data.curr;
 
                 if (stack.getItem() == item) {
                     int spend = MathHelper.clamp(stack.getCount(), 0, tospend);
-                    stack.decrement(spend);
+                    stack.shrink(spend);
                     data.curr += spend;
                 }
 
@@ -47,8 +47,8 @@ public class BringItem extends TaskType {
 
     @Override
     public int getCurrentDoneTooltip(PlayerEntity player, TaskData data) {
-        Item item = Registry.ITEM.get(new Identifier(data.getTaskEntry().data));
-        int inInv = player.inventory.count(item);
+        Item item = Registry.ITEM.get(new ResourceLocation(data.getTaskEntry().data));
+        int inInv = player.inventory.countItem(item);
         int current = MathHelper.clamp(inInv + data.curr, 0, data.req);
         return current;
     }
@@ -59,12 +59,12 @@ public class BringItem extends TaskType {
     }
 
     @Override
-    public MutableText getTranslatable(PlayerEntity player, TaskData data) {
+    public IFormattableTextComponent getTranslatable(PlayerEntity player, TaskData data) {
 
-        Item item = Registry.ITEM.get(new Identifier(data.getTaskEntry().data));
+        Item item = Registry.ITEM.get(new ResourceLocation(data.getTaskEntry().data));
 
-        return new TranslatableText(DivineMissions.MODID + ".task." + this.id).append(" ")
-            .append(item.getName());
+        return new TranslationTextComponent(DivineMissions.MODID + ".task." + this.id).append(" ")
+            .append(item.getDescription());
 
     }
 

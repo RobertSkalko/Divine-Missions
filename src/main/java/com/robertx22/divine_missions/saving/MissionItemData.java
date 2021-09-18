@@ -9,9 +9,9 @@ import com.robertx22.library_of_exile.utils.ItemstackDataSaver;
 import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +60,12 @@ public class MissionItemData {
             e.printStackTrace();
         }
 
-        player.sendMessage(new LiteralText("+" + repreward + " ").append(getGod().getTranslatable())
+        player.displayClientMessage(new StringTextComponent("+" + repreward + " ").append(getGod().getTranslatable())
             .append(" ")
-            .append(new TranslatableText(DivineMissions.MODID + ".aspect"))
+            .append(new TranslatableComponent(DivineMissions.MODID + ".aspect"))
             .append(" ")
-            .append(new TranslatableText(DivineMissions.MODID + ".reputation"))
-            .formatted(Formatting.GREEN), false);
+            .append(new TranslationTextComponent(DivineMissions.MODID + ".reputation"))
+            .withStyle(TextFormatting.GREEN), false);
 
     }
 

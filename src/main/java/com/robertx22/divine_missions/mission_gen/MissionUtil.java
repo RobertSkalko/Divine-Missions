@@ -216,7 +216,7 @@ public class MissionUtil {
     }
 
     public static List<ItemStack> getCurrentMissions(PlayerEntity player) {
-        return player.inventory.main.stream()
+        return player.inventory.items.stream()
             .filter(x -> x.getItem() == ModItems.INSTANCE.MISSION_ITEM)
             .collect(Collectors.toList());
     }

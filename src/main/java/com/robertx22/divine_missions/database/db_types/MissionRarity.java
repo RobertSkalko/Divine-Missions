@@ -6,8 +6,8 @@ import com.robertx22.divine_missions.util.FormatUtils;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class MissionRarity implements JsonExileRegistry<MissionRarity>, IAutoGson<MissionRarity> {
     public static MissionRarity SERIALIZER = new MissionRarity();
@@ -23,12 +23,12 @@ public class MissionRarity implements JsonExileRegistry<MissionRarity>, IAutoGso
     public float reward_multi = 1;
     public float diff_multi = 1;
 
-    public Formatting getFormat() {
+    public TextFormatting getFormat() {
         return FormatUtils.of(format);
     }
 
-    public TranslatableText getTranslated() {
-        return new TranslatableText(DivineMissions.MODID + ".rarity." + id);
+    public TranslationTextComponent getTranslated() {
+        return new TranslationTextComponent(DivineMissions.MODID + ".rarity." + id);
     }
 
     @Override

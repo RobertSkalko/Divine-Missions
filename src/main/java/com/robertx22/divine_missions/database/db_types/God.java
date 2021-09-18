@@ -9,8 +9,8 @@ import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
 import com.robertx22.library_of_exile.utils.RandomUtils;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
 
     public String format = "";
 
-    public Formatting getFormat() {
+    public TextFormatting getFormat() {
         return FormatUtils.of(format);
     }
 
@@ -78,8 +78,8 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
         return touse;
     }
 
-    public TranslatableText getTranslatable() {
-        return new TranslatableText(DivineMissions.MODID + ".god." + id);
+    public TranslationTextComponent getTranslatable() {
+        return new TranslatableComponent(DivineMissions.MODID + ".god." + id);
     }
 
     @Override

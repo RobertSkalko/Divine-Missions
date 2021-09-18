@@ -5,7 +5,7 @@ import com.robertx22.divine_missions.saving.RewardData;
 import com.robertx22.library_of_exile.registry.ExileRegistry;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.MutableText;
+import net.minecraft.util.text.IFormattableTextComponent;
 
 public abstract class RewardType implements ExileRegistry<RewardType> {
 
@@ -16,7 +16,7 @@ public abstract class RewardType implements ExileRegistry<RewardType> {
         }
 
         @Override
-        public MutableText getTranslatable(RewardData data) {
+        public IFormattableTextComponent getTranslatable(RewardData data) {
             return null;
         }
     };
@@ -30,7 +30,7 @@ public abstract class RewardType implements ExileRegistry<RewardType> {
 
     public abstract void giveReward(PlayerEntity player, RewardData data);
 
-    public abstract MutableText getTranslatable(RewardData data);
+    public abstract IFormattableTextComponent getTranslatable(RewardData data);
 
     @Override
     public ExileRegistryType getExileRegistryType() {

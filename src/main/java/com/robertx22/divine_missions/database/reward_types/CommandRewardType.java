@@ -6,9 +6,9 @@ import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.saving.RewardData;
 import com.robertx22.library_of_exile.utils.CommandUtils;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 public class CommandRewardType extends RewardType {
 
@@ -24,9 +24,9 @@ public class CommandRewardType extends RewardType {
     }
 
     @Override
-    public MutableText getTranslatable(RewardData data) {
-        return new LiteralText(data.count + "x ").append(DivineMissions.ofTranslation("command." + id))
-            .formatted(Formatting.DARK_PURPLE);
+    public IFormattableTextComponent getTranslatable(RewardData data) {
+        return new StringTextComponent(data.count + "x ").append(DivineMissions.ofTranslation("command." + id))
+            .withStyle(TextFormatting.DARK_PURPLE);
     }
 }
 

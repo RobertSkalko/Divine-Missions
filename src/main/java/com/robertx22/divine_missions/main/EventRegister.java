@@ -7,9 +7,12 @@ import com.robertx22.divine_missions.events.OnChestLooted;
 import com.robertx22.divine_missions.events.OnMobKill;
 import com.robertx22.library_of_exile.events.base.EventConsumer;
 import com.robertx22.library_of_exile.events.base.ExileEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.server.command.ServerCommandSource;
+import com.robertx22.library_of_exile.main.ForgeEvents;
+import net.minecraft.command.CommandSource;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class EventRegister {
 
@@ -17,12 +20,11 @@ public class EventRegister {
 
     public static void reg() {
 
-        ServerTickEvents.END_SERVER_TICK.register(x -> {
-            ticks++;
-
+        ForgeEvents.registerForgeEvent(TickEvent.ServerTickEvent.class, event -> {
+            MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
             if (ticks % 20 == 0) {
-                x.getPlayerManager()
-                    .getPlayerList()
+                server.getPlayerList()
+                    .getPlayers()
                     .forEach(p -> {
                         PlayerMissions.KEY.get(p).data.onTick(20, p);
                     });
@@ -38,8 +40,9 @@ public class EventRegister {
             }
         });
 
-        ServerLifecycleEvents.SERVER_STARTED.register(server -> {
-            CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager()
+        ForgeEvents.registerForgeEvent(FMLServerStartedEvent.class, event -> {
+            MinecraftServer server = event.getServer();
+            CommandDispatcher<CommandSource> dispatcher = server.getCommands()
                 .getDispatcher();
             GiveReputation.register(dispatcher);
             ResetReputations.register(dispatcher);
@@ -50,5 +53,7 @@ public class EventRegister {
 
         ExileEvents.MOB_DEATH.register(new OnMobKill());
         ExileEvents.ON_CHEST_LOOTED.register(new OnChestLooted());
+
     }
+
 }

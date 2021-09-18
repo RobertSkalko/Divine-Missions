@@ -9,8 +9,8 @@ import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.HashMap;
 
@@ -54,7 +54,7 @@ public class PlayerMissionData {
 
         PlayerMissions.KEY.sync(player);
 
-        player.sendMessage(new TranslatableText(DivineMissions.MODID + ".new_missions_arrived").formatted(Formatting.GOLD), false);
+        player.displayClientMessage(new TranslationTextComponent(DivineMissions.MODID + ".new_missions_arrived").withStyle(TextFormatting.GOLD), false);
 
     }
 

@@ -3,8 +3,8 @@ package com.robertx22.divine_missions.data_gen.adders;
 import com.robertx22.divine_missions.data_gen.builders.TaskEntryBuilder;
 import com.robertx22.divine_missions.database.db_types.TaskEntry;
 import com.robertx22.divine_missions.util.MinMax;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 
 public class TaskEntryAdder {
 

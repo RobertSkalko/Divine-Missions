@@ -7,33 +7,27 @@ import com.robertx22.divine_missions.mission_gen.MissionUtil;
 import com.robertx22.divine_missions.saving.MissionItemData;
 import com.robertx22.divine_missions.util.ClientOnly;
 import com.robertx22.library_of_exile.utils.SoundUtils;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.ModList;
 
 import java.util.List;
 
 public class MissionItem extends Item {
 
     public MissionItem() {
-        super(new Settings().maxCount(1)
-            .group(DivineMissions.CreativeTab));
+        super(new Item.Properties().stacksTo(1)
+            .tab(DivineMissions.CreativeTab));
 
     }
 
@@ -50,7 +44,7 @@ public class MissionItem extends Item {
                 .putInt(TICKS, ticksleft);
 
             if (ticksleft < 0) {
-                stack.decrement(1);
+                stack.shrink(1);
             }
 
         }
@@ -58,7 +52,7 @@ public class MissionItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        if (entity.age % 20 == 0) {
+        if (entity.tickCount % 20 == 0) {
             try {
                 if (entity instanceof ServerPlayerEntity) {
                     if (!MissionItemData.SAVER.has(stack)) {
@@ -74,12 +68,12 @@ public class MissionItem extends Item {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public InteractionResultHolder<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
-        ItemStack stack = user.getStackInHand(hand);
+        ItemStack stack = user.getItemInHand(hand);
 
-        if (world.isClient) {
-            return TypedActionResult.pass(stack);
+        if (world.isClientSide) {
+            return InteractionResultHolder.pass(stack);
         }
 
         try {
@@ -94,23 +88,23 @@ public class MissionItem extends Item {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                stack.decrement(1);
+                stack.shrink(1);
 
-                SoundUtils.ding(world, user.getBlockPos());
+                SoundUtils.ding(world, user.blockPosition());
             } else {
-                SoundUtils.playSound(user, SoundEvents.ENTITY_VILLAGER_NO, 1, 1);
+                SoundUtils.playSound(user, SoundEvents.VILLAGER_NO, 1, 1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return TypedActionResult.pass(stack);
+        return InteractionResultHolder.pass(stack);
 
     }
 
     @Override
-    @Environment(EnvType.CLIENT)
-    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    @OnlyIn(Dist.CLIENT)
+    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag context) {
 
         try {
 
@@ -119,11 +113,11 @@ public class MissionItem extends Item {
             if (data != null) {
                 tooltip.clear();
 
-                MutableText name = data.getRarity()
+                IFormattableTextComponent name = data.getRarity()
                     .getTranslated()
                     .append(" ")
-                    .append(new TranslatableText("divine_missions.mission"))
-                    .formatted(data.getRarity()
+                    .append(new TranslationTextComponent("divine_missions.mission"))
+                    .withStyle(data.getRarity()
                         .getFormat());
 
                 int sec = stack.getTag()
@@ -152,39 +146,39 @@ public class MissionItem extends Item {
 
                 tooltip.add(name);
 
-                tooltip.add(new LiteralText(""));
+                tooltip.add(new StringTextComponent(""));
 
-                tooltip.add(new TranslatableText(DivineMissions.MODID + ".required").append(":")
-                    .formatted(Formatting.GOLD));
+                tooltip.add(new TranslationTextComponent(DivineMissions.MODID + ".required").append(":")
+                    .withStyle(TextFormatting.GOLD));
 
                 data.tasks.forEach(x -> {
                     tooltip.add(x.getTranslated(ClientOnly.getPlayer()));
                 });
-                tooltip.add(new LiteralText(""));
+                tooltip.add(new StringTextComponent(""));
 
-                tooltip.add(new TranslatableText(DivineMissions.MODID + ".rewards").append(":")
-                    .formatted(Formatting.GOLD));
+                tooltip.add(new TranslatableComponent(DivineMissions.MODID + ".rewards").append(":")
+                    .withStyle(TextFormatting.GOLD));
 
                 data.rewards.forEach(x -> {
                     tooltip.add(x.getTranslated());
                 });
 
-                tooltip.add(new LiteralText(""));
+                tooltip.add(new StringTextComponent(""));
 
-                tooltip.add(new TranslatableText(DivineMissions.MODID + ".aspect").append(": ")
+                tooltip.add(new TranslatableComponent(DivineMissions.MODID + ".aspect").append(": ")
                     .append(data.getGod()
                         .getTranslatable())
-                    .formatted(data.getGod()
+                    .withStyle(data.getGod()
                         .getFormat()));
 
                 if (data.canFinishTooltip(ClientOnly.getPlayer())) {
-                    tooltip.add(new LiteralText(""));
+                    tooltip.add(new StringTextComponent(""));
                     tooltip.add(DivineMissions.ofTranslation("click_to_turn_in")
-                        .formatted(Formatting.BLUE));
+                        .withStyle(TextFormatting.BLUE));
                 }
 
-                if (FabricLoader.getInstance()
-                    .isModLoaded("mmorpg")) {
+                if (ModList.get()
+                    .isLoaded("mmorpg")) {
                     if (data.tasks.stream()
                         .anyMatch(x -> x.getTaskType().id.equals(TaskTypeIds.ANY_MOB_KILL))) {
                         if (data.tasks.stream()
@@ -192,7 +186,7 @@ public class MissionItem extends Item {
                             if (PlayerReputation.KEY.get(ClientOnly.getPlayer())
                                 .getReputationLevel(data.getGod()).rank == 0) {
                                 tooltip.add(DivineMissions.ofTranslation("aoe_level_range_tip")
-                                    .formatted(Formatting.BLUE));
+                                    .withStyle(TextFormatting.BLUE));
                             }
                         }
                     }

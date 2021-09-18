@@ -6,8 +6,8 @@ import com.robertx22.divine_missions.database.db_types.TaskType;
 import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.util.Formatting;
+import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TextFormatting;
 
 @Storable
 public class TaskData {
@@ -27,10 +27,10 @@ public class TaskData {
         return data;
     }
 
-    public MutableText getTranslated(PlayerEntity player) {
+    public IFormattableTextComponent getTranslated(PlayerEntity player) {
         return getTaskType().getTranslatable(player, this)
             .append(" (" + getTaskType().getCurrentDoneTooltip(player, this) + "/" + req + ")")
-            .formatted(Formatting.RED);
+            .withStyle(TextFormatting.RED);
     }
 
     public void increaseProgress() {

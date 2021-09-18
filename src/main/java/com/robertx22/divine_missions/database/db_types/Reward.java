@@ -7,7 +7,7 @@ import com.robertx22.divine_missions.saving.RewardData;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
 import com.robertx22.library_of_exile.registry.IAutoGson;
 import com.robertx22.library_of_exile.registry.JsonExileRegistry;
-import net.minecraft.text.MutableText;
+import net.minecraft.util.text.IFormattableTextComponent;
 
 public class Reward implements JsonExileRegistry<Reward>, IAutoGson<Reward> {
     public static Reward SERIALIZER = new Reward();
@@ -24,7 +24,7 @@ public class Reward implements JsonExileRegistry<Reward>, IAutoGson<Reward> {
     public int min = 1;
     public int max = 3;
 
-    public MutableText getTranslated(RewardData data) {
+    public IFormattableTextComponent getTranslated(RewardData data) {
         return getRewardType().getTranslatable(data);
     }
 

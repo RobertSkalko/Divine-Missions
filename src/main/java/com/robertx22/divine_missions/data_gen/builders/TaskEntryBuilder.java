@@ -4,22 +4,22 @@ import com.robertx22.divine_missions.database.TaskTypeIds;
 import com.robertx22.divine_missions.database.WorthTypeIds;
 import com.robertx22.divine_missions.database.db_types.TaskEntry;
 import com.robertx22.divine_missions.util.MinMax;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.entity.EntityType;
 
 public class TaskEntryBuilder {
 
     public static TaskEntry kill(int seconds, int weight, EntityType type, int worth, MinMax minmax) {
         TaskEntry en = new TaskEntry();
-        en.id = "kill_" + Registry.ENTITY_TYPE.getId(type)
+        en.id = "kill_" + Registry.ENTITY_TYPE.getKey(type)
             .getPath();
         en.worths.put(WorthTypeIds.DEFAULT, worth);
         en.min = minmax.min;
         en.max = minmax.max;
         en.weight = weight;
         en.seconds = seconds;
-        en.data = Registry.ENTITY_TYPE.getId(type)
+        en.data = Registry.ENTITY_TYPE.getKey(type)
             .toString();
         en.task_type = TaskTypeIds.SPECIFIC_MOB_KILL;
         en.addToSerializables();
@@ -56,11 +56,11 @@ public class TaskEntryBuilder {
 
     public static TaskEntry collect(int weight, Item item, int worth, MinMax minmax) {
         TaskEntry en = new TaskEntry();
-        en.id = "get_" + Registry.ITEM.getId(item)
+        en.id = "get_" + Registry.ITEM.getKey(item)
             .toString()
             .replace(":", "_");
         en.weight = weight;
-        en.data = Registry.ITEM.getId(item)
+        en.data = Registry.ITEM.getKey(item)
             .toString();
         en.worths.put(WorthTypeIds.DEFAULT, worth);
         en.min = minmax.min;

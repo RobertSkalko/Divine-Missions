@@ -1,5 +1,6 @@
 package com.robertx22.divine_missions.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.robertx22.divine_missions.components.PlayerMissions;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.packets.PickMissionPacket;
@@ -7,10 +8,9 @@ import com.robertx22.library_of_exile.gui.ItemSlotButton;
 import com.robertx22.library_of_exile.main.Packets;
 import com.robertx22.library_of_exile.utils.CLOC;
 import com.robertx22.library_of_exile.utils.GuiUtils;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class MissionsScreen extends BaseScreen {
         super(146, 180);
     }
 
-    static Identifier BACKGROUND = DivineMissions.id("textures/gui/background.png");
+    static ResourceLocation BACKGROUND = DivineMissions.id("textures/gui/background.png");
 
     @Override
     public void init() {
@@ -79,7 +79,7 @@ public class MissionsScreen extends BaseScreen {
             txt = CLOC.translate(DivineMissions.ofTranslation("come_back_later"));
         }
 
-        GuiUtils.renderScaledText(matrix, guiLeft + X / 2, guiTop + Y + 10, 1F, txt, Formatting.GREEN);
+        GuiUtils.renderScaledText(matrix, guiLeft + X / 2, guiTop + Y + 10, 1F, txt, TextFormatting.GREEN);
 
         buttons.forEach(b -> b.renderToolTip(matrix, x, y));
 

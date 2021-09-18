@@ -6,9 +6,9 @@ import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.MutableText;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.text.IFormattableTextComponent;
 
 @Storable
 public class RewardData {
@@ -27,10 +27,10 @@ public class RewardData {
     }
 
     public ItemStack getStack() {
-        return new ItemStack(Registry.ITEM.get(new Identifier(getReward().data)), count);
+        return new ItemStack(Registry.ITEM.get(new ResourceLocation(getReward().data)), count);
     }
 
-    public MutableText getTranslated() {
+    public IFormattableTextComponent getTranslated() {
         return getReward().getTranslated(this);
     }
 
