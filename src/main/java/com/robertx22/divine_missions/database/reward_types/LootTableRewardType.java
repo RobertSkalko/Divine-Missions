@@ -8,13 +8,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.LootTable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class LootTableRewardType extends RewardType {
             .withParameter(LootParameters.ORIGIN, player.position())
             .withParameter(LootParameters.TOOL, ItemStack.EMPTY)
             .withParameter(LootParameters.BLOCK_STATE, Blocks.AIR.defaultBlockState())
-            .create(LootContextParamSets.BLOCK);
+            .create(LootParameterSets.BLOCK);
         ServerWorld serverWorld = lootContext.getLevel();
         LootTable lootTable = serverWorld.getServer()
             .getLootTables()

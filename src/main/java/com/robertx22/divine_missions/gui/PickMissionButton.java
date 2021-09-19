@@ -2,7 +2,7 @@ package com.robertx22.divine_missions.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.robertx22.divine_missions.components.PlayerMissions;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.main.DivineMissions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.ImageButton;
@@ -14,7 +14,7 @@ public class PickMissionButton extends ImageButton {
 
     static ResourceLocation TEX = DivineMissions.id("textures/gui/pick.png");
 
-    public PickMissionButton(int missionNumber, int x, int y, OnPress pressAction) {
+    public PickMissionButton(int missionNumber, int x, int y, IPressable pressAction) {
         super(x, y, 16, 16, 0, 0, 0, DivineMissions.id("textures/gui/pick.png"), pressAction);
         this.missionNumber = missionNumber;
     }
@@ -24,7 +24,7 @@ public class PickMissionButton extends ImageButton {
 
         Minecraft mc = Minecraft.getInstance();
 
-        if (PlayerMissions.KEY.get(mc.player).data.picks > 0 && PlayerMissions.KEY.get(mc.player).data.missions.containsKey(missionNumber)) {
+        if (PlayerMissionCap.get(mc.player).missionData.missions.containsKey(missionNumber)) {
 
             mc.getTextureManager()
                 .bind(TEX);

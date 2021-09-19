@@ -1,16 +1,13 @@
 package com.robertx22.divine_missions.components.data;
 
-import com.robertx22.divine_missions.components.PlayerMissions;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.configs.MissionsConfig;
-import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.mission_gen.MissionUtil;
 import com.robertx22.library_of_exile.utils.RandomUtils;
 import info.loenwind.autosave.annotations.Storable;
 import info.loenwind.autosave.annotations.Store;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.HashMap;
 
@@ -19,8 +16,8 @@ public class PlayerMissionData {
 
     @Store
     public HashMap<Integer, ItemStack> missions = new HashMap<>();
-    @Store
-    public int picks = 0;
+    //@Store
+    //public int picks = 0;
     @Store
     public int mission_cd = 10000;
 
@@ -36,25 +33,26 @@ public class PlayerMissionData {
 
     public void generateNew(PlayerEntity player) {
 
-        this.missions = new HashMap<>();
-        this.picks = RandomUtils.RandomRange(MissionsConfig.get().MIN_MISSIONS_TO_PICK, MissionsConfig.get().MAX_MISSIONS_TO_PICK);
-
-        for (int i = 0; i < MissionsConfig.get().MISSIONS_TO_GENERATE_EACH_TIME; i++) {
-            ItemStack stack = MissionUtil.createRandomMissionItem(player);
-
-            missions.put(i, stack);
+        for (int i = 0; i < 9; i++) {
+            if (missions.getOrDefault(i, ItemStack.EMPTY)
+                .isEmpty()) {
+                ItemStack stack = MissionUtil.createRandomMissionItem(player);
+                missions.put(i, stack);
+                break;
+            }
         }
 
-        int cd = MissionsConfig.get().MINUTES_OF_COOLDOWN_TO_REFRESH_MISSIONS * 60 * 20;
+        int cd = MissionsConfig.get().MINUTES_OF_COOLDOWN_TO_REFRESH_MISSIONS.get() * 60 * 20;
 
-        int cdmin = cd - (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION);
-        int cdmax = cd + (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION);
+        int cdmin = cd - (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION.get());
+        int cdmax = cd + (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION.get());
 
         this.mission_cd = RandomUtils.RandomRange(cdmin, cdmax);
 
-        PlayerMissions.KEY.sync(player);
+        PlayerMissionCap.get(player)
+            .syncToClient(player);
 
-        player.displayClientMessage(new TranslationTextComponent(DivineMissions.MODID + ".new_missions_arrived").withStyle(TextFormatting.GOLD), false);
+        // player.displayClientMessage(new TranslationTextComponent(DivineMissions.MODID + ".new_missions_arrived").withStyle(TextFormatting.GOLD), false);
 
     }
 

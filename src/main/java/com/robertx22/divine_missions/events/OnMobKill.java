@@ -4,10 +4,10 @@ import com.robertx22.divine_missions.database.TaskTypeIds;
 import com.robertx22.divine_missions.mission_gen.MissionUtil;
 import com.robertx22.library_of_exile.events.base.EventConsumer;
 import com.robertx22.library_of_exile.events.base.ExileEvents;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
 
 public class OnMobKill extends EventConsumer<ExileEvents.OnMobDeath> {
 
@@ -15,7 +15,7 @@ public class OnMobKill extends EventConsumer<ExileEvents.OnMobDeath> {
     public void accept(ExileEvents.OnMobDeath event) {
         if (event.killer instanceof PlayerEntity) {
 
-            if (event.mob instanceof Monster || event.mob instanceof Enemy || !event.mob.getType()
+            if (event.mob instanceof MobEntity || event.mob instanceof IMob || !event.mob.getType()
                 .getCategory()
                 .isFriendly()) {
 

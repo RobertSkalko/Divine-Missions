@@ -1,15 +1,13 @@
 package com.robertx22.divine_missions.main;
 
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 
-public class ClientInit implements ClientModInitializer {
+public class ClientInit {
 
-    @Override
-    public void onInitializeClient() {
+    public static void onInitializeClient() {
 
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.INSTANCE.SHRINE, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(ModBlocks.SHRINE.get(), RenderType.translucent());
 
     }
 }

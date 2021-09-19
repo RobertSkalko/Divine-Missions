@@ -1,16 +1,13 @@
 package com.robertx22.divine_missions.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.robertx22.divine_missions.components.PlayerMissions;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.packets.PickMissionPacket;
 import com.robertx22.library_of_exile.gui.ItemSlotButton;
 import com.robertx22.library_of_exile.main.Packets;
-import com.robertx22.library_of_exile.utils.CLOC;
-import com.robertx22.library_of_exile.utils.GuiUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 
 import java.util.Map;
 
@@ -29,7 +26,7 @@ public class MissionsScreen extends BaseScreen {
     public void init() {
         super.init();
 
-        PlayerMissions missions = PlayerMissions.KEY.get(mc.player);
+        PlayerMissionCap missions = PlayerMissionCap.get(mc.player);
 
         int startX = 25;
 
@@ -38,7 +35,7 @@ public class MissionsScreen extends BaseScreen {
 
         int i = 0;
 
-        for (Map.Entry<Integer, ItemStack> entry : missions.data.missions.entrySet()) {
+        for (Map.Entry<Integer, ItemStack> entry : missions.missionData.missions.entrySet()) {
 
             ItemSlotButton itemslot = new ItemSlotButton(entry.getValue(), x, y);
             itemslot.renderFancyBorder = true;
@@ -69,8 +66,10 @@ public class MissionsScreen extends BaseScreen {
     public void render(MatrixStack matrix, int x, int y, float ticks) {
 
         renderBackground(matrix, BACKGROUND);
+        super.render(matrix, x, y, ticks);
 
-        int picks = PlayerMissions.KEY.get(mc.player).data.picks;
+        /*
+        int picks = PlayerMissionCap.get(mc.player).missionData.picks;
         super.render(matrix, x, y, ticks);
         String txt = CLOC.translate(DivineMissions.ofTranslation("picks"))
             + ": " + picks;
@@ -80,6 +79,8 @@ public class MissionsScreen extends BaseScreen {
         }
 
         GuiUtils.renderScaledText(matrix, guiLeft + X / 2, guiTop + Y + 10, 1F, txt, TextFormatting.GREEN);
+
+         */
 
         buttons.forEach(b -> b.renderToolTip(matrix, x, y));
 

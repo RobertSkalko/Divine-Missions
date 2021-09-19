@@ -1,6 +1,6 @@
 package com.robertx22.divine_missions.mission_gen;
 
-import com.robertx22.divine_missions.components.PlayerReputation;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.database.MissionsDB;
 import com.robertx22.divine_missions.database.WorthTypeIds;
 import com.robertx22.divine_missions.database.db_types.*;
@@ -32,7 +32,7 @@ public class MissionUtil {
             data = createRandom(player);
         }
 
-        ItemStack stack = new ItemStack(ModItems.INSTANCE.MISSION_ITEM);
+        ItemStack stack = new ItemStack(ModItems.MISSION_ITEM.get());
 
         MissionItemData.SAVER.saveTo(stack, data);
 
@@ -50,7 +50,7 @@ public class MissionUtil {
 
         MissionItemData data = new MissionItemData();
 
-        PlayerReputation reps = PlayerReputation.KEY.get(player);
+        PlayerMissionCap reps = PlayerMissionCap.get(player);
 
         List<GodWeight> weights = new ArrayList<>();
         for (God god : MissionsDB.Gods()
@@ -217,7 +217,7 @@ public class MissionUtil {
 
     public static List<ItemStack> getCurrentMissions(PlayerEntity player) {
         return player.inventory.items.stream()
-            .filter(x -> x.getItem() == ModItems.INSTANCE.MISSION_ITEM)
+            .filter(x -> x.getItem() == ModItems.MISSION_ITEM.get())
             .collect(Collectors.toList());
     }
 

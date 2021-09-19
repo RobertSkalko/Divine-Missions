@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import com.robertx22.divine_missions.components.PlayerReputation;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.database.MissionsDB;
 import com.robertx22.divine_missions.database.db_types.God;
 import com.robertx22.divine_missions.main.DivineMissions;
@@ -40,7 +40,7 @@ public class GiveReputation {
 
         Preconditions.checkNotNull(god);
 
-        PlayerReputation.KEY.get(player)
+        PlayerMissionCap.get(player)
             .addReputation(amount, god);
 
         return 0;

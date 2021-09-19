@@ -2,8 +2,8 @@ package com.robertx22.divine_missions.database.condition_types;
 
 import com.robertx22.divine_missions.database.ConditionTypeIds;
 import com.robertx22.divine_missions.database.db_types.ConditionType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.fml.ModList;
 
 public class IsModLoaded extends ConditionType {
 
@@ -13,8 +13,8 @@ public class IsModLoaded extends ConditionType {
 
     @Override
     public boolean isAllowed(PlayerEntity player, ConditionData data) {
-        return FabricLoader.getInstance()
-            .isModLoaded(data.map.get("modid"));
+        return ModList.get()
+            .isLoaded(data.map.get("modid"));
     }
 
     public static ConditionData of(String modid) {

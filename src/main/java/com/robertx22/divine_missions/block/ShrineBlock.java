@@ -1,5 +1,6 @@
 package com.robertx22.divine_missions.block;
 
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.util.ClientOnly;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -38,10 +39,13 @@ public class ShrineBlock extends Block {
     public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
                                 Hand hand, BlockRayTraceResult ray) {
         if (world.isClientSide) {
+
             ClientOnly.openMissionsScreen();
             return ActionResultType.CONSUME;
+        } else {
+            PlayerMissionCap.get(player)
+                .syncToClient(player);
         }
-
         return ActionResultType.CONSUME;
     }
 }

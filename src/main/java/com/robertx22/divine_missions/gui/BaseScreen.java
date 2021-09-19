@@ -3,8 +3,8 @@ package com.robertx22.divine_missions.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -49,7 +49,7 @@ public class BaseScreen extends Screen {
         this.guiTop = (this.height - this.sizeY) / 2;
     }
 
-    public <T extends AbstractWidget> T publicAddButton(T w) {
+    public <T extends Widget> T publicAddButton(T w) {
         return this.addButton(w);
     }
 

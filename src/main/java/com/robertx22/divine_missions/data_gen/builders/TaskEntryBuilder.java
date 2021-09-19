@@ -4,9 +4,9 @@ import com.robertx22.divine_missions.database.TaskTypeIds;
 import com.robertx22.divine_missions.database.WorthTypeIds;
 import com.robertx22.divine_missions.database.db_types.TaskEntry;
 import com.robertx22.divine_missions.util.MinMax;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.entity.EntityType;
 
 public class TaskEntryBuilder {
 

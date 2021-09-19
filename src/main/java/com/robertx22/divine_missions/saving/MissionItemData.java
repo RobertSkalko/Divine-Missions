@@ -1,6 +1,6 @@
 package com.robertx22.divine_missions.saving;
 
-import com.robertx22.divine_missions.components.PlayerReputation;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.database.MissionsDB;
 import com.robertx22.divine_missions.database.db_types.God;
 import com.robertx22.divine_missions.database.db_types.MissionRarity;
@@ -51,7 +51,7 @@ public class MissionItemData {
 
         int repreward = rep * 2;
 
-        PlayerReputation.KEY.get(player)
+        PlayerMissionCap.get(player)
             .addReputation(repreward, getGod());
 
         try {
@@ -62,7 +62,7 @@ public class MissionItemData {
 
         player.displayClientMessage(new StringTextComponent("+" + repreward + " ").append(getGod().getTranslatable())
             .append(" ")
-            .append(new TranslatableComponent(DivineMissions.MODID + ".aspect"))
+            .append(new TranslationTextComponent(DivineMissions.MODID + ".aspect"))
             .append(" ")
             .append(new TranslationTextComponent(DivineMissions.MODID + ".reputation"))
             .withStyle(TextFormatting.GREEN), false);

@@ -79,7 +79,7 @@ public class God implements JsonExileRegistry<God>, IAutoGson<God> {
     }
 
     public TranslationTextComponent getTranslatable() {
-        return new TranslatableComponent(DivineMissions.MODID + ".god." + id);
+        return new TranslationTextComponent(DivineMissions.MODID + ".god." + id);
     }
 
     @Override

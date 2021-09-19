@@ -6,6 +6,7 @@ import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.saving.TaskData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class KillMobTag extends TaskType {
 
@@ -15,7 +16,7 @@ public class KillMobTag extends TaskType {
 
     @Override
     public IFormattableTextComponent getTranslatable(PlayerEntity player, TaskData data) {
-        return new TranslatableComponent(DivineMissions.MODID + ".task." + this.id).append(" ")
+        return new TranslationTextComponent(DivineMissions.MODID + ".task." + this.id).append(" ")
             .append(data.getTaskEntry().data);
 
     }

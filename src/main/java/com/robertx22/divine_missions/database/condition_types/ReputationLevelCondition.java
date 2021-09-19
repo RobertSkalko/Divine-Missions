@@ -1,6 +1,6 @@
 package com.robertx22.divine_missions.database.condition_types;
 
-import com.robertx22.divine_missions.components.PlayerReputation;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.database.ConditionTypeIds;
 import com.robertx22.divine_missions.database.MissionsDB;
 import com.robertx22.divine_missions.database.db_types.ConditionType;
@@ -19,7 +19,7 @@ public class ReputationLevelCondition extends ConditionType {
         ReputationLevel rep = MissionsDB.ReputationLevels()
             .get(data.map.get("rep_level"));
 
-        return PlayerReputation.KEY.get(player)
+        return PlayerMissionCap.get(player)
             .getReputationLevel(MissionsDB.Gods()
                 .get(data.map.get("god"))).rank >= rep.rank;
 

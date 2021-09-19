@@ -1,7 +1,7 @@
 package com.robertx22.divine_missions.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.robertx22.divine_missions.components.PlayerReputation;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.main.DivineMissions;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.arguments.EntityArgument;
@@ -22,7 +22,7 @@ public class ResetReputations {
     }
 
     private static int execute(CommandSource commandSource, PlayerEntity player) {
-        PlayerReputation.KEY.get(player).data.resetAll();
+        PlayerMissionCap.get(player).repData.resetAll();
         return 0;
     }
 }

@@ -2,11 +2,14 @@ package com.robertx22.divine_missions.main;
 
 import com.robertx22.divine_missions.block.ShrineBlock;
 import net.minecraft.block.Block;
-import net.minecraft.util.registry.Registry;
+import net.minecraftforge.fml.RegistryObject;
 
 public class ModBlocks {
 
-    public static ModBlocks INSTANCE;
+    public static RegistryObject<Block> SHRINE = DivineDeffered.BLOCKS.register("shrine", () -> new ShrineBlock());
 
-    public Block SHRINE = Registry.register(Registry.BLOCK, DivineMissions.id("shrine"), new ShrineBlock());
+    public static void init() {
+
+    }
+
 }

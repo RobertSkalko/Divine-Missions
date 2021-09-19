@@ -1,7 +1,7 @@
 package com.robertx22.divine_missions.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.robertx22.divine_missions.components.PlayerMissions;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.main.DivineMissions;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.arguments.EntityArgument;
@@ -22,7 +22,7 @@ public class RefreshMissions {
     }
 
     private static int execute(CommandSource commandSource, PlayerEntity player) {
-        PlayerMissions.KEY.get(player).data.generateNew(player);
+        PlayerMissionCap.get(player).missionData.generateNew(player);
         return 0;
     }
 }

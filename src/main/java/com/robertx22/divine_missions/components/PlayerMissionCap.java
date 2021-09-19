@@ -7,7 +7,7 @@ import com.robertx22.divine_missions.database.db_types.God;
 import com.robertx22.divine_missions.database.db_types.ReputationLevel;
 import com.robertx22.library_of_exile.components.forge.BaseProvider;
 import com.robertx22.library_of_exile.components.forge.BaseStorage;
-import com.robertx22.library_of_exile.components.forge.ICommonCap;
+import com.robertx22.library_of_exile.components.forge.IPlayerCap;
 import com.robertx22.library_of_exile.main.Ref;
 import com.robertx22.library_of_exile.utils.LoadSave;
 import net.minecraft.entity.Entity;
@@ -26,7 +26,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class PlayerMissionCap implements ICommonCap {
+public class PlayerMissionCap implements IPlayerCap {
 
     public static final ResourceLocation RESOURCE = new ResourceLocation(Ref.MODID, "player_missions");
 
@@ -38,9 +38,10 @@ public class PlayerMissionCap implements ICommonCap {
             .orElse(null);
     }
 
-    private static final String DMG_STATS = "dmg_stats";
-    private static final String SPAWN_POS = "spawn_pos";
-    private static final String SPAWN_REASON = "spawn";
+    @Override
+    public String getCapIdForSyncing() {
+        return "player_missions";
+    }
 
     @Mod.EventBusSubscriber
     public static class EventHandler {
@@ -155,7 +156,6 @@ public class PlayerMissionCap implements ICommonCap {
     @Override
     public void loadFromNBT(CompoundNBT nbt) {
         try {
-            nbt = new CompoundNBT();
             this.missionData = LoadSave.Load(PlayerMissionData.class, new PlayerMissionData(), nbt, MISSIN_DATA_LOC);
             if (missionData == null) {
                 missionData = new PlayerMissionData();

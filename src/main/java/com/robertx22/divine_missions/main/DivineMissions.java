@@ -11,7 +11,7 @@ public class DivineMissions {
         return false;
     }
 
-    public static String MODID = "divine_missions";
+    public final static String MODID = "divine_missions";
 
     public static ResourceLocation id(String path) {
         return new ResourceLocation(MODID, path);
@@ -24,7 +24,7 @@ public class DivineMissions {
     public static ItemGroup CreativeTab = new ItemGroup("creative_tab") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.INSTANCE.SHRINE);
+            return new ItemStack(ModItems.SHRINE.get());
         }
     };
 

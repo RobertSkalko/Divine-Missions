@@ -1,6 +1,6 @@
 package com.robertx22.divine_missions.item;
 
-import com.robertx22.divine_missions.components.PlayerReputation;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.database.TaskTypeIds;
 import com.robertx22.divine_missions.main.DivineMissions;
 import com.robertx22.divine_missions.mission_gen.MissionUtil;
@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.*;
@@ -68,12 +69,12 @@ public class MissionItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
 
         ItemStack stack = user.getItemInHand(hand);
 
         if (world.isClientSide) {
-            return InteractionResultHolder.pass(stack);
+            return ActionResult.pass(stack);
         }
 
         try {
@@ -98,13 +99,13 @@ public class MissionItem extends Item {
             e.printStackTrace();
         }
 
-        return InteractionResultHolder.pass(stack);
+        return ActionResult.pass(stack);
 
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag context) {
+    public void appendHoverText(ItemStack stack, World world, List<ITextComponent> tooltip, ITooltipFlag context) {
 
         try {
 
@@ -156,7 +157,7 @@ public class MissionItem extends Item {
                 });
                 tooltip.add(new StringTextComponent(""));
 
-                tooltip.add(new TranslatableComponent(DivineMissions.MODID + ".rewards").append(":")
+                tooltip.add(new TranslationTextComponent(DivineMissions.MODID + ".rewards").append(":")
                     .withStyle(TextFormatting.GOLD));
 
                 data.rewards.forEach(x -> {
@@ -165,7 +166,7 @@ public class MissionItem extends Item {
 
                 tooltip.add(new StringTextComponent(""));
 
-                tooltip.add(new TranslatableComponent(DivineMissions.MODID + ".aspect").append(": ")
+                tooltip.add(new TranslationTextComponent(DivineMissions.MODID + ".aspect").append(": ")
                     .append(data.getGod()
                         .getTranslatable())
                     .withStyle(data.getGod()
@@ -183,7 +184,7 @@ public class MissionItem extends Item {
                         .anyMatch(x -> x.getTaskType().id.equals(TaskTypeIds.ANY_MOB_KILL))) {
                         if (data.tasks.stream()
                             .allMatch(x -> x.curr == 0)) {
-                            if (PlayerReputation.KEY.get(ClientOnly.getPlayer())
+                            if (PlayerMissionCap.get(ClientOnly.getPlayer())
                                 .getReputationLevel(data.getGod()).rank == 0) {
                                 tooltip.add(DivineMissions.ofTranslation("aoe_level_range_tip")
                                     .withStyle(TextFormatting.BLUE));

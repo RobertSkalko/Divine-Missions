@@ -2,7 +2,7 @@ package com.robertx22.divine_missions.main;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.robertx22.divine_missions.commands.*;
-import com.robertx22.divine_missions.components.PlayerMissions;
+import com.robertx22.divine_missions.components.PlayerMissionCap;
 import com.robertx22.divine_missions.events.OnChestLooted;
 import com.robertx22.divine_missions.events.OnMobKill;
 import com.robertx22.library_of_exile.events.base.EventConsumer;
@@ -14,7 +14,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
-public class EventRegister {
+public class DivineEvents {
 
     static int ticks = 0;
 
@@ -26,7 +26,7 @@ public class EventRegister {
                 server.getPlayerList()
                     .getPlayers()
                     .forEach(p -> {
-                        PlayerMissions.KEY.get(p).data.onTick(20, p);
+                        PlayerMissionCap.get(p).missionData.onTick(20, p);
                     });
             }
         });
