@@ -20,7 +20,7 @@ public class MissionsConfig {
 
         MINUTES_OF_COOLDOWN_TO_REFRESH_MISSIONS = b
             .comment("Minutes it takes to get a new mission")
-            .defineInRange("gain_mission_cooldown_minutes", 20, 1, 100000);
+            .defineInRange("gain_mission_cooldown_minutes", 30, 1, 100000);
         MISSION_REFRESH_COOLDOWN_VARIATION = b
             .comment("0 means every x minutes while 0.5 means every x-x/2 to x+x/2 minutes, (random time variation)")
             .defineInRange("cd_refresh_time_variation", 0.5D, 0D, 1D);

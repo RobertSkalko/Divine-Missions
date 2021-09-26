@@ -21,13 +21,15 @@ public class DivineEvents {
     public static void reg() {
 
         ForgeEvents.registerForgeEvent(TickEvent.ServerTickEvent.class, event -> {
-            MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-            if (ticks % 20 == 0) {
-                server.getPlayerList()
-                    .getPlayers()
-                    .forEach(p -> {
-                        PlayerMissionCap.get(p).missionData.onTick(20, p);
-                    });
+            if (event.phase == TickEvent.Phase.END) {
+                MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+                if (ticks % 20 == 0) {
+                    server.getPlayerList()
+                        .getPlayers()
+                        .forEach(p -> {
+                            PlayerMissionCap.get(p).missionData.onTick(20, p);
+                        });
+                }
             }
         });
 

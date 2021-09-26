@@ -16,16 +16,15 @@ public class PlayerMissionData {
 
     @Store
     public HashMap<Integer, ItemStack> missions = new HashMap<>();
-    //@Store
-    //public int picks = 0;
+
     @Store
     public int mission_cd = 10000;
 
     public void onTick(int ticks, PlayerEntity player) {
 
-        mission_cd -= ticks;
-
-        if (mission_cd < 0) {
+        if (mission_cd > 0) {
+            mission_cd -= ticks;
+        } else {
             generateNew(player);
         }
 
