@@ -33,7 +33,7 @@ public class CommonInit {
 
         DivineDeffered.registerDefferedAtStartOfModLoading();
         ModLoadingContext.get()
-            .registerConfig(ModConfig.Type.COMMON, MissionsConfig.commonSpec);
+            .registerConfig(ModConfig.Type.SERVER, MissionsConfig.SPEC);
 
         final IEventBus bus = FMLJavaModLoadingContext.get()
             .getModEventBus();

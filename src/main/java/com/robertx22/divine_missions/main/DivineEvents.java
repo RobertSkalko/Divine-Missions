@@ -22,6 +22,7 @@ public class DivineEvents {
 
         ForgeEvents.registerForgeEvent(TickEvent.ServerTickEvent.class, event -> {
             if (event.phase == TickEvent.Phase.END) {
+                ticks++;
                 MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
                 if (ticks % 20 == 0) {
                     server.getPlayerList()

@@ -4,6 +4,7 @@ import com.robertx22.divine_missions.db_init.RegistryTypes;
 import com.robertx22.divine_missions.saving.TaskData;
 import com.robertx22.library_of_exile.registry.ExileRegistry;
 import com.robertx22.library_of_exile.registry.ExileRegistryType;
+import com.robertx22.library_of_exile.utils.RandomUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.IFormattableTextComponent;
 
@@ -41,6 +42,10 @@ public abstract class TaskType implements ExileRegistry<TaskType> {
 
     public void spendItems(PlayerEntity player, TaskData data) {
 
+    }
+
+    public int getRandomTaskCount(TaskEntry task, MissionRarity rar) {
+        return (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi);
     }
 
     public abstract IFormattableTextComponent getTranslatable(PlayerEntity player, TaskData data);

@@ -96,13 +96,8 @@ public class MissionUtil {
             TaskEntry task = RandomUtils.weightedRandom(possible);
             if (task != null) {
 
-                int count = 1;
-
-                try {
-                    count = (int) (RandomUtils.RandomRange(task.min, task.max) * rar.diff_multi);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                int count = task.getType()
+                    .getRandomTaskCount(task, rar);
 
                 TaskData taskData = TaskData.createNew(task, count);
                 data.tasks.add(taskData);

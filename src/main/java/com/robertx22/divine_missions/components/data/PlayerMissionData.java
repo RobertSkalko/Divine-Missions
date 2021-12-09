@@ -41,7 +41,7 @@ public class PlayerMissionData {
             }
         }
 
-        int cd = MissionsConfig.get().MINUTES_OF_COOLDOWN_TO_REFRESH_MISSIONS.get() * 60 * 20;
+        int cd = MissionsConfig.get().MIN_TO_GAIN_NEW_MISSIONS.get() * 60 * 20;
 
         int cdmin = cd - (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION.get());
         int cdmax = cd + (int) (cd * MissionsConfig.get().MISSION_REFRESH_COOLDOWN_VARIATION.get());
